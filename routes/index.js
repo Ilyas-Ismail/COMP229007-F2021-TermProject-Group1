@@ -4,10 +4,15 @@
 
 var express = require('express');
 var router = express.Router();
+let surveyController = require('../controllers/survey');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('home', { title: 'Home' });
 });
+
+router.get('/surveys', surveyController.surveys);
+
+router.get('/surveys/new', surveyController.displayAddPage);
 
 module.exports = router;
