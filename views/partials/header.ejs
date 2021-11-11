@@ -1,0 +1,69 @@
+<!-- File name: header.ejs
+Author(s): Henry Suh (301004212)
+Date: Nov 11, 2021 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Head -->
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel='stylesheet' href='/css/style.css' />
+</head>
+<body>
+  <!-- Main navbar -->
+  <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #cdd7da;">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="/">
+      <img src="/img/logo.png" alt="logo" style="width:40px; margin-left: 20px;">
+      Binary Brains
+    </a>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Links -->
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+              <% if(title == 'Home') { %>
+                  <a class="nav-link active"
+              <%} else { %>
+                  <a class="nav-link"
+              <% } %>
+              href="/"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li class="nav-item dropdown">
+            <% if (title == "Surveys" || title == "New Survey" || title == "Edit Survey") { %>
+              <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <% } else { %>
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <% } %>     
+            <i class="fas fa-tasks"></i> Surveys
+              </a>  
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/surveys">Available Surveys</a></li>
+              <li><a class="dropdown-item" href="/surveys/new">New Survey</a></li>
+            </ul>
+          </li>   
+        <li class="nav-item">
+            <% if(title == 'Sign in') { %>
+                <a class="nav-link active"
+            <%} else { %>
+                <a class="nav-link"
+            <% } %>
+            href="/users/signin"><i class="fas fa-tasks"></i> Sign in</a>
+          </li>
+        <!-- <li class="nav-item">
+          <% if (typeof userName == 'string' && userName) { %>
+            <a class="nav-link" href="/users/signout" onclick="return confirm('Are you sure?')">Sign Out (<%= userName %>)</a>
+          <%} else { %>
+            <a class="nav-link" href="/users/signin"><i class="fas fa-lock"></i>Sign in</a>
+          <% } %>
+        </li> -->
+      </ul>
+    </div>
+
+    
+  </nav>
+  
