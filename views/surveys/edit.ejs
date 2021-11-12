@@ -1,0 +1,58 @@
+<% include ../partials/header.ejs %>
+
+<!-- File name: new.ejs
+Author(s): Kyle O'Keeffe
+Date: Nov 11, 2021 -->
+
+<h1>Welcome to <%= title %></h1>
+
+<div class ="container">
+    <div class ="row">
+        <div class = "offset-md-3 col-md-6">
+            <h1><%= title %></h1>
+            <h1><%= survey.name %></h1>
+
+            <form class="form" method="POST">
+                <div class="form-group">
+                    <input type="hidden" 
+                    name="id" 
+                    value="<%= survey._id %>"
+                >
+               
+                </div>
+                <div class="form-group">
+                    <label for="questionTextField">Question</label>
+                    <input type="text" 
+                        class="form-control" 
+                        id="questionTextField" 
+                        placeholder="Question" 
+                        name="questionTextField" 
+                        value ="<%= survey.question %>" 
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="option1TextField">Option</label>
+                    <input type="text" 
+                        class="form-control" 
+                        id="option1TextField" 
+                        placeholder="Option1" 
+                        name="option1TextField" 
+                        value ="<%= survey.option1 %>" 
+                        required>
+                </div>
+              
+    
+                
+                <br>
+          
+                <button class="btn btn-dark" type="submit"> <i class="fas fa-edit"></i>Create Survey</button>
+                <a class="btn btn-warning" href ="/surveys/list" > <i class="fas fa-undo"></i>Cancel</a>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ../partials/footer.ejs %>
+
+

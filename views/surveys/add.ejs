@@ -1,0 +1,62 @@
+<% include ../partials/header.ejs %>
+
+<!-- File name: new.ejs
+Author(s): Kyle O'Keeffe
+Date: Nov 11, 2021 -->
+
+<h1>Welcome to <%= title %></h1>
+
+<div class ="container">
+    <div class ="row">
+        <div class = "offset-md-3 col-md-6">
+            <h1><%= title %></h1>
+            <h1>Please choose the type of survey you would like to create</h1>
+
+            <form class="form" method="POST">
+                <div class="form-group">
+                    <input type="hidden" 
+                    name="id" 
+                    value="<%= survey._id %>"
+                >
+                    <!-- value=""
+                        need to include value of user id forwarded from auth -->
+                    </div>
+                <div class="form-group">
+                    <label for="surveyNameTextField">Survey Name</label>
+                    <input type="text" 
+                        class="form-control" 
+                        id="surveyNameTextField" 
+                        placeholder="Survey Name" 
+                        name="name" 
+                        value ="<%= survey.name %>" 
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="surveyTypeDropdown"></label>
+
+                        <select 
+                            class="form-select"
+                            id="surveyTypeDropdown"
+                            name="surveyType"
+                            aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">Multiple Choice</option>
+                        <option value="2">Short Answer</option>
+                    </select>
+                </div>
+              
+    
+                
+                <br>
+          
+                <button class="btn btn-dark" type="submit"> <i class="fas fa-edit"></i>Create Survey</button>
+                <a class="btn btn-warning" href ="/surveys/list" > <i class="fas fa-undo"></i>Cancel</a>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ../partials/footer.ejs %>
+
+
