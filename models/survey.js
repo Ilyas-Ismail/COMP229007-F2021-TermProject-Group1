@@ -11,7 +11,9 @@ let surveySchema = mongoose.Schema(
         // Questions: [],
         // Choices: [[]]
         name: String,
-        surveyType: String
+        surveyType: String,
+        question: String,
+        option1: String
     },
     {
         collection: "surveys"
