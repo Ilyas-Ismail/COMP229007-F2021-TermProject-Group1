@@ -5,7 +5,7 @@
 // create a reference to the model
 let Survey = require('../models/survey');
 
-module.exports.surveys = function(req, res, next) {  
+module.exports.displaySurveyList = function(req, res, next) {  
     Survey.find((err, surveys) => {
         if(err)
         {
@@ -13,7 +13,7 @@ module.exports.surveys = function(req, res, next) {
         }
         else
         {
-            res.render('surveys/surveys', {
+            res.render('surveys/list', {
                 title: 'Surveys', 
                 surveys: surveys
             })            
@@ -22,27 +22,27 @@ module.exports.surveys = function(req, res, next) {
 }
 
 module.exports.displayAddPage = (req, res, next) => {
+   
     // create a new survey object
     let newSurvey = Survey();
 
     // display the add view
-    res.render('surveys/new', { 
-        title: 'New Survey'
-
-        //survey: newSurvey 
+    res.render('surveys/add', { 
+        title: 'New Survey',
+        survey: newSurvey 
     });     
-
+    
 }
+
+
 
 module.exports.processAddPage = (req, res, next) => {
 
     let newSurvey = Survey({
-        
-        type: req.body.surveyType,
-        name: req.body.name
-    });
+        _id: req.body.id,
+        name: req.body.name,
 
-  
+    });
 
     // Insert a new survey into DB
     Survey.create(newSurvey, (err, item) =>{
@@ -54,7 +54,10 @@ module.exports.processAddPage = (req, res, next) => {
         else
         {
             // refresh
-            res.redirect('/surveys/edit');
+            res.render('/surveys/edit', {
+                title: "Edit Survey",
+                Survey: newSurvey
+            });
         }
     });
 }
@@ -64,7 +67,7 @@ module.exports.displayEditPage = (req, res, next) => {
     let id = req.params.id;
 
     // Find a specific survey matched with the id
-    Survey.findById(id, (err, survey) => {
+    Survey.findById(id, (err, surveyToEdit) => {
         if(err)
         {
             console.log(err);
@@ -73,9 +76,9 @@ module.exports.displayEditPage = (req, res, next) => {
         else
         {
             // display the edit view
-            res.render('surveys/add_edit', {
+            res.render('surveys/edit', {
                 title: 'Edit Survey', 
-                survey: survey
+                survey: surveyToEdit
             })
         }
     });
@@ -87,12 +90,12 @@ module.exports.processEditPage = (req, res, next) => {
     let id = req.params.id
 
     // Create a survey object
-    let updated = Survey({
+    let updatedSurvey = Survey({
         _id: req.body.id
     });
 
     // Update the collection
-    Survey.updateOne({_id: id}, updated, (err) => {
+    Survey.updateOne({_id: id}, updatedSurvey, (err) => {
         if(err)
         {
             console.log(err);
@@ -101,7 +104,7 @@ module.exports.processEditPage = (req, res, next) => {
         else
         {
             // refresh
-            res.redirect('/surveys');
+            res.redirect('/surveys/list');
         }
     });
 }
@@ -120,7 +123,7 @@ module.exports.performDelete = (req, res, next) => {
         else
         {
             // refresh
-            res.redirect('/surveys');
+            res.redirect('/surveys/list');
         }
     });
 }

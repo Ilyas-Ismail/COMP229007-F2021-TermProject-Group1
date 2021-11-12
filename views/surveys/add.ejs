@@ -15,21 +15,20 @@ Date: Nov 11, 2021 -->
             <form class="form" method="POST">
                 <div class="form-group">
                     <input type="hidden" 
-                        name="id" 
-             
-                     
-                    >
+                    name="id" 
+                    value="<%= survey._id %>"
+                >
                     <!-- value=""
                         need to include value of user id forwarded from auth -->
                     </div>
                 <div class="form-group">
                     <label for="surveyNameTextField">Survey Name</label>
-                    <input type="surveyName" 
+                    <input type="text" 
                         class="form-control" 
                         id="surveyNameTextField" 
                         placeholder="Survey Name" 
                         name="surveyName" 
-                   
+                        value ="<%= survey.name %>" 
                         required>
                 </div>
                 <div class="form-group">
@@ -51,7 +50,7 @@ Date: Nov 11, 2021 -->
                 <br>
           
                 <button class="btn btn-dark" type="submit"> <i class="fas fa-edit"></i>Create Survey</button>
-                <a class="btn btn-warning" href ="/surveys/add_edit" > <i class="fas fa-undo"></i>Cancel</a>
+                <a class="btn btn-warning" href ="/surveys/list" > <i class="fas fa-undo"></i>Cancel</a>
 
             </form>
         </div>
