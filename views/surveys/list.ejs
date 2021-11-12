@@ -13,7 +13,6 @@ Date: Nov 11, 2021 -->
         <!-- Header row -->
         <tr>
             <th class = "text-center">Name</th>
-            <th class = "text-center">Type</th>
             <th class = "text-center">Question</th>
             <th class = "text-center">Option1</th>
             <th class = "text-center" colspan="2">Actions</th>
@@ -26,8 +25,7 @@ Date: Nov 11, 2021 -->
             <td><%= SurveyList[i].type %></td>
             <td><%= SurveyList[i].question %></td>
             <td><%= SurveyList[i].option1 %></td>
-            <!-- <td><a class="btn btn-primary btn-sm" href="/businessContacts/edit/<%= BusinessContactsList[i]._id %>">Edit<i class= "fas fa-pencil-alt"></i></a></td> -->
-            <!-- <td><a class="btn btn-danger btn-sm" href="/businessContacts/delete/<%= BusinessContactsList[i]._id %>">Delete<i class= "fas fa-pencil-alt"></i></a></td> -->
+ 
             </tr> 
         <% } %>
     </table>
