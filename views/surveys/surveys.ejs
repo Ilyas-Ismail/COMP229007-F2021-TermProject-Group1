@@ -35,7 +35,7 @@ Date: Nov 11, 2021 -->
                             <%= surveys[i].Title %>
                         </a></td>
                         <!-- <td class="text-center col-2"><%= surveys[i].Questions %></td>
-                        <td class="text-center col-4"><%= surveys[i].Choices %></td>
+                        <td class="text-center col-4"><%= surveys[i].Choices %></td> -->
                         <td class="text-center col-1">
                             <a href="/surveys/edit/<%= surveys[i]._id %>" class="btn btn-primary btn-sm">
                             <i class="fas fa-pencil-alt"></i> Edit</a>
@@ -47,7 +47,7 @@ Date: Nov 11, 2021 -->
                         <td class="text-center col-1">
                             <a href="/surveys/addquestion/<%= surveys[i]._id %>" class="btn btn-primary align-self-end" role="button">
                             <i class="fas fa-plus-circle"></i> Questions</a>              
-                        </td> -->
+                        </td>
                     </tr>
                 <% } %>
             </table>
