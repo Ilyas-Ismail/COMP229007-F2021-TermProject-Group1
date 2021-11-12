@@ -1,0 +1,34 @@
+<% include ../partials/header.ejs %>
+
+<!-- File name: surveys.ejs
+Author(s): Henry Suh (301004212)
+Date: Nov 11, 2021 -->
+
+<h1>Welcome to <%= title %></h1>
+
+<div class="Container">
+    <p>Available Surveys</p>
+    <table class="table table-bordered table-striped table-hover">
+                
+        <!-- Header row -->
+        <tr>
+            <th class = "text-center">Name</th>
+            <th class = "text-center">Question</th>
+            <th class = "text-center">Option1</th>
+            <th class = "text-center" colspan="2">Actions</th>
+        </tr>
+
+        <!-- Single row to be looped for each database entry -->
+        <% for(let i = 0; i<SurveyList.length; i++){ %>
+            <tr>
+            <td><%= SurveyList[i].name %></td>
+            <td><%= SurveyList[i].type %></td>
+            <td><%= SurveyList[i].question %></td>
+            <td><%= SurveyList[i].option1 %></td>
+ 
+            </tr> 
+        <% } %>
+    </table>
+</div>
+
+<% include ../partials/footer.ejs %>

@@ -15,16 +15,30 @@ Date: Nov 11, 2021 -->
 </head>
 <body>
   <!-- Main navbar -->
-  <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #cdd7da;">
+
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cdd7da;">
+
+ 
+
     <!-- Brand/logo -->
     <a class="navbar-brand" href="/">
       <img src="/img/logo.png" alt="logo" style="width:40px; margin-left: 20px;">
       Binary Brains
     </a>
+
+
+    <!-- Toggle button when view on smaller devices   -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Links -->
-    <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav ms-auto mb-2 lg-0">
+
+    
+
         <li class="nav-item">
               <% if(title == 'Home') { %>
                   <a class="nav-link active"
