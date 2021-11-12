@@ -4,20 +4,20 @@
 
 var express = require('express');
 var router = express.Router();
-let surveyController = require('../controllers/survey');
+//let surveyController = require('../controllers/survey');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('home', { title: 'Home' });
 });
 
-router.get('/surveys/edit', surveyController.displayEditPage);
+// router.get('/surveys/edit', surveyController.displayEditPage);
 
-router.post('/surveys/edit', surveyController.processEditPage);
+// router.post('/surveys/edit', surveyController.processEditPage);
 
-router.get('/surveys/add', surveyController.displayAddPage);
+// router.get('/surveys/add', surveyController.displayAddPage);
 
-router.post('/surveys/add', surveyController.processAddPage);
-router.get('/surveys/list', surveyController.displaySurveyList)
+// router.post('/surveys/add', surveyController.processAddPage);
+// router.get('/surveys/list', surveyController.displaySurveyList)
 
 module.exports = router;

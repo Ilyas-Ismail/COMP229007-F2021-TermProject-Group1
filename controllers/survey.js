@@ -6,16 +6,16 @@
 let Survey = require('../models/survey');
 
 module.exports.displaySurveyList = function(req, res, next) {  
-    Survey.find((err, surveys) => {
+    Survey.find((err, surveyList) => {
         if(err)
         {
             return console.error(err);
         }
         else
         {
-            res.render('surveys/list', {
-                title: 'Surveys', 
-                surveys: surveys
+            res.render('/surveys/list', {
+                title: 'Survey List', 
+                SurveyList: surveyList
             })            
         }
     });
@@ -43,6 +43,7 @@ module.exports.processAddPage = (req, res, next) => {
         name: req.body.name,
 
     });
+    console.log(newSurvey.name);
 
     // Insert a new survey into DB
     Survey.create(newSurvey, (err, item) =>{
@@ -54,10 +55,11 @@ module.exports.processAddPage = (req, res, next) => {
         else
         {
             // refresh
-            res.render('surveys/edit', {
-                title: "Edit Survey",
-                survey: newSurvey
-            });
+            // res.render('surveys/edit', {
+            //     title: "Edit Survey",
+            //     survey: newSurvey
+            // });
+            res.redirect('/surveys/edit/'+newSurvey._id);
         }
     });
 }
@@ -65,6 +67,7 @@ module.exports.processAddPage = (req, res, next) => {
 module.exports.displayEditPage = (req, res, next) => {
     
     let id = req.params.id;
+    console.log('name is'+req.body.name);
 
     // Find a specific survey matched with the id
     Survey.findById(id, (err, surveyToEdit) => {
@@ -91,7 +94,10 @@ module.exports.processEditPage = (req, res, next) => {
 
     // Create a survey object
     let updatedSurvey = Survey({
-        _id: req.body.id
+        _id: req.body.id,
+        name: req.body.name,
+        question: req.body.question,
+        option1: req.body.option1
     });
 
     // Update the collection
@@ -123,7 +129,7 @@ module.exports.performDelete = (req, res, next) => {
         else
         {
             // refresh
-            res.redirect('/surveys/list');
+            res.redirect('surveys/list');
         }
     });
 }
