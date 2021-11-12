@@ -13,7 +13,7 @@ module.exports.displaySurveyList = function(req, res, next) {
         }
         else
         {
-            res.render('/surveys/list', {
+            res.render('surveys/list', {
                 title: 'Survey List', 
                 SurveyList: surveyList
             })            
