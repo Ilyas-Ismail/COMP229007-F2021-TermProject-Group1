@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
   res.render('home', { title: 'Home' });
 });
 
-router.get('/surveys/edit/:id', surveyController.displayEditPage);
+router.get('/surveys/edit', surveyController.displayEditPage);
 
-router.post('/surveys/edit/:id', surveyController.processEditPage);
+router.post('/surveys/edit', surveyController.processEditPage);
 
 router.get('/surveys/add', surveyController.displayAddPage);
 

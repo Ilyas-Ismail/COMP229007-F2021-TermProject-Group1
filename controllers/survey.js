@@ -54,9 +54,9 @@ module.exports.processAddPage = (req, res, next) => {
         else
         {
             // refresh
-            res.render('/surveys/edit', {
+            res.render('surveys/edit', {
                 title: "Edit Survey",
-                Survey: newSurvey
+                survey: newSurvey
             });
         }
     });
