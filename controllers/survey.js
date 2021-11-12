@@ -13,7 +13,7 @@ module.exports.surveys = function(req, res, next) {
         }
         else
         {
-            res.render('survyes/surveys', {
+            res.render('surveys/surveys', {
                 title: 'Surveys', 
                 surveys: surveys
             })            
@@ -26,9 +26,10 @@ module.exports.displayAddPage = (req, res, next) => {
     let newSurvey = Survey();
 
     // display the add view
-    res.render('surveys/add_edit', { 
-        title: 'New Survey',
-        survey: newSurvey 
+    res.render('surveys/new', { 
+        title: 'New Survey'
+
+        //survey: newSurvey 
     });     
 
 }
@@ -36,8 +37,12 @@ module.exports.displayAddPage = (req, res, next) => {
 module.exports.processAddPage = (req, res, next) => {
 
     let newSurvey = Survey({
-        _id: req.body.id
+        
+        type: req.body.surveyType,
+        name: req.body.name
     });
+
+  
 
     // Insert a new survey into DB
     Survey.create(newSurvey, (err, item) =>{
@@ -49,7 +54,7 @@ module.exports.processAddPage = (req, res, next) => {
         else
         {
             // refresh
-            res.redirect('/surveys');
+            res.redirect('/surveys/edit');
         }
     });
 }

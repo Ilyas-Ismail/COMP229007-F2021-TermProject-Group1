@@ -6,14 +6,16 @@ let mongoose = require('mongoose');
 // Create a model class
 let surveySchema = mongoose.Schema(
     {
-        Title: String,
-        Owner: String,
-        Questions: [],
-        Choices: [[]]
+        // Title: String,
+        // Owner: String,
+        // Questions: [],
+        // Choices: [[]]
+        name: String,
+        surveyType: String
     },
     {
         collection: "surveys"
     }
 );
 
-module.exports = mongoose.model('Book', surveySchema);
+module.exports = mongoose.model('Survey', surveySchema);

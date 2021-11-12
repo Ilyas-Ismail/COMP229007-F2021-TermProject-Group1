@@ -11,8 +11,12 @@ router.get('/', function(req, res, next) {
   res.render('home', { title: 'Home' });
 });
 
-router.get('/surveys', surveyController.surveys);
+router.get('/surveys/edit:id', surveyController.displayEditPage);
 
-router.get('/surveys/new', surveyController.displayAddPage);
+router.post('/surveys/edit:id', surveyController.processEditPage);
+
+router.get('/surveys/add', surveyController.displayAddPage);
+
+router.post('/surveys/add', surveyController.processAddPage);
 
 module.exports = router;
