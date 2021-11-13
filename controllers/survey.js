@@ -64,12 +64,10 @@ module.exports.processAddPage = (req, res, next) => {
     let newSurvey = Survey({
         _id: req.body.id,
         Title: req.body.Title,
+        targetIndex: 0,
         //UserID: req.user.id,
-        // Questions: req.body.Questions,
-        // Choices: req.body.Choices
-        // $push: 
-        // { Questions: req.body.Questions,
-        // Choices: req.body.Choices }
+        // Questions: [],
+        // Choices: [[]]
     });
 
     // Insert a new survey into DB
@@ -103,9 +101,9 @@ module.exports.displayEditPage = (req, res, next) => {
         else
         {
             // display the edit view
-            res.render('surveys/add_edit', {
+            res.render('surveys/edit', {
                 title: 'Edit Survey', 
-                survey: survey
+                surveys: survey
             })
         }
     });
@@ -205,6 +203,7 @@ module.exports.processQuestionPage = (req, res, next) => {
             _id: req.body.id,
             // UserID: req.body.UserID,
             Title: req.body.Title,
+            targetIndex: req.body.targetIdx
         });
 
         Survey.updateOne({_id: id}, {
@@ -219,10 +218,21 @@ module.exports.processQuestionPage = (req, res, next) => {
             else
             {
                 if (inputValue == 'next') {
-                    res.render('surveys/add_question', {
-                        title: 'Add Question', 
-                        survey: updated
-                    })
+                    updated.targetIndex = updated.targetIndex + 1;
+                    Survey.findById(id, (err, survey) => {
+                        if(err)
+                        {
+                            console.log(err);
+                            res.end(err);
+                        }
+                        else
+                        {
+                            res.render('surveys/add_question', {
+                                title: 'Add Question', 
+                                survey: survey
+                            })
+                        }
+                    });
                 }
                 else if (inputValue == 'done'){
                     res.redirect('/surveys/list');

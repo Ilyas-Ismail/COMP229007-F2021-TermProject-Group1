@@ -14,12 +14,11 @@ let mc_surveySchema = mongoose.Schema(
         UserID: String,
         Questions: {
             type: [],
-            required: true
         },
         Choices: {
             type: [[]],
-            required: true
-        }
+        },
+        targetIndex: Number
     },
     {
         collection: "text_survey"

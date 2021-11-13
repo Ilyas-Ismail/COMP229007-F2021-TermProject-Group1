@@ -20,8 +20,8 @@
                 <div class="container">
                 <% for(let j = 0; j < surveys.Choices[i].length; j++) { %>
                 <div class="form-group">
-                    <input type="radio" id="choice<%= i %>" name="choice<%= i %>" value="<%= j %>">
-                    <label for="choice<%= i %>">
+                    <input type="radio" id="choice<%= i %><%= j %>" name="choice<%= i %>" value="<%= j %>">
+                    <label for="choice<%= i %><%= j %>">
                         <%= surveys.Choices[i][j] %>
                     </label>
                 </div>
