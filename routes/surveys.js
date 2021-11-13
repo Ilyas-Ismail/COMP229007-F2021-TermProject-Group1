@@ -6,11 +6,23 @@ var express = require('express');
 var router = express.Router();
 let surveyController = require('../controllers/survey');
 
-router.get('/edit/:id', surveyController.displayEditPage);
-
 router.get('/survey/:id', surveyController.close_up);
 
+router.get('/edit/:id', surveyController.displayEditPage);
+
 router.post('/edit/:id', surveyController.processEditPage);
+
+router.get('/edit/title/:id', surveyController.displayEditTitlePage);
+
+router.post('/edit/title/:id', surveyController.processEditTitlePage);
+
+router.get('/edit/question/:id/:idx', surveyController.displayEditQuestionPage);
+
+router.post('/edit/question/:id/:idx', surveyController.processEditQuestionPage);
+
+router.get('/editadd/:id', surveyController.displayEditAddQPage);
+
+router.post('/editadd/:id', surveyController.processEditAddQPage);
 
 router.get('/addquestion/:id', surveyController.displayQuestionPage);
 

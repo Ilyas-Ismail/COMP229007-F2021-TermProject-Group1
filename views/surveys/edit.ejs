@@ -6,45 +6,49 @@
             <h1><%= title %></h1>
 
                 <div class="form-group">
-
-                    <h2>Survey Title: <%= surveys.Title %></h2>
+                    <h2>Survey Title: <%= survey.Title %></h2>
                 </div>
+                <a href="/surveys/edit/title/<%= survey._id %>" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> 
+                    Edit title
+                </a>
                 <br/>
                 <br/>
                 <br/>
-                <% for(let i = 0; i < surveys.Questions.length; i++) { %>
+                <% for(let i = 0; i < survey.Questions.length; i++) { %>
                 <div class="form-group">
-                    <h5>Q: <%= surveys.Questions[i] %></h4>
+                    <h5>Q: <%= survey.Questions[i] %></h4>
                 </div>
                 <br/>
                 <div class="container">
-                <% for(let j = 0; j < surveys.Choices[i].length; j++) { %>
+                <% for(let j = 0; j < survey.Choices[i].length; j++) { %>
                 <div class="form-group">
-                    <input type="radio" id="choice<%= i %>" name="choice<%= i %>" value="<%= j %>">
                     <label for="choice<%= i %>">
-                        <%= surveys.Choices[i][j] %>
+                        <%= survey.Choices[i][j] %>
                     </label>
                 </div>
                 <br />
                 <% } %>
                 </div>
                 <br/>
-                <button class="btn btn-primary" type="submit" name="btn" value="done">
+                <a href="/surveys/edit/question/<%= survey._id %>/<%= i %>" class="btn btn-primary">
                     <i class="fas fa-edit"></i> 
                     Edit this question
-                </button>
+                </a>
+                <br/>
+                <br/>
+                <br/>
                 <% } %>
-
-                <a href="/surveys/list" class="btn btn-primary">
-                    <i class="fas fa-edit"></i>
-                    Submit
+                <br/>
+                <a href="/surveys/editadd/<%= survey._id %>" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> 
+                    Add a question
                 </a>
                 <a href="/surveys/list" class="btn btn-warning">
                     <i class="fas fa-undo"></i> 
                     Return
                 </a>
 
-            </form>
         </div>
 
     </div>
