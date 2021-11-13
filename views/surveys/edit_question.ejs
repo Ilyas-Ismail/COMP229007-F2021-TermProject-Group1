@@ -19,8 +19,8 @@
                         value="<%= survey.Title %>"
                         required>
                     <input type="hidden"
-                        name="title"
-                        value="<%= title %>"
+                        name="index"
+                        value="<%= index %>"
                     >
                 </div>
                 <br />
@@ -29,20 +29,23 @@
                     <input type="text" class="form-control"
                         id="surveyTextField"
                         placeholder="Enter the Questions"
-                        name="Questions" 
+                        name="Questions"
+                        value="<%= survey.Questions[index] %>"
                         >
                 </div>
                 <br />
                 <br />
                 <label for="surveyTextField">Choices</label>
                 <div id="divChoices" class="form-group">
+                    <% for(let i = 0; i < survey.Choices[index].length; i++) { %>
                     <input type="text" class="form-control"
                         id="surveyTextField"
                         placeholder="Enter the Questions"
                         name="Choices"
-                        value=""
+                        value="<%= survey.Choices[index][i]%>"
                         >
-                    <% for(let i = 0; i < 9; i++) { %>
+                    <% } %>
+                    <% for(let i = survey.Choices[index].length; i < 10; i++) { %>
                         <input type="text" class="form-control"
                         id="surveyTextField"
                         placeholder="Enter the Questions"
@@ -59,28 +62,17 @@
                 <br />
                 <br />
                 <br />
-                <% if (title != 'Edit Survey') { %>
-                <button class="btn btn-primary" type="submit" name="btn" value="next">
-                    <i class="fas fa-edit"></i> 
-                    Next Question
-                </button>
-                <% } %>
+
 
                 <button class="btn btn-primary" type="submit" name="btn" value="done">
                     <i class="fas fa-edit"></i> 
-                    Done
+                    Save
                 </button>
-                <% if (title == 'Edit Survey') { %>
-                    <a href="/surveys/edit/<%= survey._id %>" class="btn btn-warning" type="submit">
-                        <i class="fas fa-undo"></i> 
-                        Cancel
-                    </a>
-                <% } else { %>
-                <button class="btn btn-warning" type="submit" name="btn" value="cancel">
+
+                <a href="/surveys/edit/<%= survey._id %>" class="btn btn-warning" type="submit">
                     <i class="fas fa-undo"></i> 
                     Cancel
-                </button>
-                <% } %>
+                </a>
                 
             </form>
         </div>
