@@ -8,11 +8,11 @@
 
             <form class="form" method="POST">
                 <div class="form-group">
-                    <input type="hidden"
+                    <input type="text"
                         name="id"
                         value="<%= survey._id %>"
                     >
-                    <input type="hidden" class="form-control"
+                    <input type="text" class="form-control"
                         id="surveyTextField"
                         placeholder="Enter the Title"
                         name="Title" 
@@ -26,32 +26,50 @@
                         id="surveyTextField"
                         placeholder="Enter the Questions"
                         name="Questions" 
-                        value="<%= survey.Questions %>"
-                        required>
+                        >
                 </div>
                 <br />
                 <br />
-                <div class="form-group">
-                    <label for="surveyTextField">Choices</label>
+                <label for="surveyTextField">Choices</label>
+                <div id="divChoices" class="form-group">
                     <input type="text" class="form-control"
                         id="surveyTextField"
-                        placeholder="Enter the Choices"
-                        name="Choices" 
-                        value="<%= survey.Choices %>"
-                        required>
+                        placeholder="Enter the Questions"
+                        name="Choices"
+                        value=""
+                        >
+                    <% for(let i = 0; i < 9; i++) { %>
+                        <input type="text" class="form-control"
+                        id="surveyTextField"
+                        placeholder="Enter the Questions"
+                        name="Choices"
+                        value=""
+                        style="display: none;"
+                        >
+                    <% } %>
                 </div>
+                <br />
+                <button id="btn_addChoice" class="btn btn-primary" type="button">
+                    Add a choice
+                </button>
+                <br />
                 <br />
                 <br />
 
-                <button class="btn btn-primary" type="submit">
+                <button class="btn btn-primary" type="submit" name="btn" value="next">
                     <i class="fas fa-edit"></i> 
-                    Submit
+                    Next Question
                 </button>
-                
-                <a href="/book/list" class="btn btn-warning">
-                    <i class="fas fa-undo"></i> 
+
+                <button class="btn btn-primary" type="submit" name="btn" value="done">
+                    <i class="fas fa-edit"></i> 
+                    Done
+                </button>
+
+                <button class="btn btn-warning" type="submit" name="btn" value="cancel">
+                    <i class="fas fa-edit"></i> 
                     Cancel
-                </a>
+                </button>
 
             </form>
         </div>

@@ -4,17 +4,12 @@
 Author(s): Henry Suh (301004212)
 Date: Nov 11, 2021 -->
 
-<!-- <h1>Welcome to <%= title %></h1>
-
-<div class="Container">
-    <p>Available Surveys</p>
-</div>
-
-<% include ../partials/footer.ejs %> -->
-
 <div class="container">
     <h1 class="display-1"><%= title %></h1>
     <div class="row">  
+        <div class="col-md-2 Btn" style="background-color: rgb(96, 223, 255);">
+            <a href="/surveys/add">New Survey</a>
+        </div>
         <div class="col-md-11">
             <br>
             <table class="table table-bordered table-hover">

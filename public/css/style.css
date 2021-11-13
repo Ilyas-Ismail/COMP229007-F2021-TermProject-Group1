@@ -3,5 +3,12 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+}
+
+.Btn{
+  padding: 5px;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
 }

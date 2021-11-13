@@ -14,7 +14,7 @@ module.exports.surveys = function(req, res, next) {
         }
         else
         {
-            res.render('surveys/surveys', {
+            res.render('surveys/list', {
                 title: 'Surveys', 
                 surveys: surveys
             })            
@@ -65,8 +65,8 @@ module.exports.processAddPage = (req, res, next) => {
         _id: req.body.id,
         Title: req.body.Title,
         //UserID: req.user.id,
-        Questions: req.body.Questions,
-        Choices: req.body.Choices
+        // Questions: req.body.Questions,
+        // Choices: req.body.Choices
         // $push: 
         // { Questions: req.body.Questions,
         // Choices: req.body.Choices }
@@ -81,8 +81,8 @@ module.exports.processAddPage = (req, res, next) => {
         }
         else
         {
-            // refresh
-            res.redirect('/surveys/list');
+            // redirect
+            res.redirect('/surveys/addquestion/' + newSurvey._id);
         }
     });
 }
@@ -123,8 +123,8 @@ module.exports.processEditPage = (req, res, next) => {
         _id: req.body.id,
         // UserID: req.body.UserID,
         Title: req.body.Title,
-        Questions: req.body.Questions,
-        Choices: req.body.Choices
+        // Questions: req.body.Questions,
+        // Choices: req.body.Choices
     });
 
     Survey.updateOne({_id: id}, updated, (err) => {
@@ -135,7 +135,7 @@ module.exports.processEditPage = (req, res, next) => {
         }
         else
         {
-            res.redirect('/surveys/list');
+            res.redirect('/surveys/addquestion/' + updated._id);
         }
     });
 
@@ -190,29 +190,46 @@ module.exports.displayQuestionPage = (req, res, next) => {
 
 module.exports.processQuestionPage = (req, res, next) => {
     
-    let id = req.params.id
+    let id = req.params.id;
+    let inputValue = req.body.btn;
+    let choices = req.body.Choices;
+    choices = choices.filter(item => item != "");
 
-    // Create a survey object, UserID will be added after authentication
-    let updated = Survey({
-        _id: req.body.id,
-        // UserID: req.body.UserID,
-        Title: req.body.Title,
-        $push: { Questions: req.body.Questions },
-        $push: { Choices: req.body.Choices }
-    });
+    if (inputValue == 'cancel') {
+        res.redirect('/surveys/delete/' + id);
+    }
+    else{
+        
+        // Create a survey object, UserID will be added after authentication
+        let updated = Survey({
+            _id: req.body.id,
+            // UserID: req.body.UserID,
+            Title: req.body.Title,
+        });
 
-    Survey.updateOne({_id: id}, updated, (err) => {
-        if(err)
-        {
-            console.log(err);
-            res.end(err);
-        }
-        else
-        {
-            res.redirect('/surveys/list');
-        }
-    });
-
+        Survey.updateOne({_id: id}, {
+            $push: { Questions: req.body.Questions,
+                     Choices: choices }
+        }, (err) => {
+            if(err)
+            {
+                console.log(err);
+                res.end(err);
+            }
+            else
+            {
+                if (inputValue == 'next') {
+                    res.render('surveys/add_question', {
+                        title: 'Add Question', 
+                        survey: updated
+                    })
+                }
+                else if (inputValue == 'done'){
+                    res.redirect('/surveys/list');
+                }
+            }
+        });
+    }
     // Update the collection, will be added after authentication
 
     // if (req.body.UserID != req.user.id) {

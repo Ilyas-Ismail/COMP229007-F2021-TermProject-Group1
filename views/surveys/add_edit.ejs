@@ -12,7 +12,8 @@
                         name="id"
                         value="<%= survey._id %>"
                     >
-                    <label for="surveyTextField">Title</label>
+                </br>
+                    <label for="surveyTextField">Survey Title:</label>
                     <input type="text" class="form-control"
                         id="surveyTextField"
                         placeholder="Enter the Title"
@@ -20,7 +21,7 @@
                         value="<%= survey.Title %>"
                         required>
                 </div>
-                <br />
+                <!-- <br />
                 <div class="form-group">
                     <label for="surveyTextField">Questions</label>
                     <input type="text" class="form-control"
@@ -40,16 +41,16 @@
                         name="Choices" 
                         value="<%= survey.Choices %>"
                         required>
-                </div>
+                </div>-->
                 <br />
-                <br />
+                <br /> 
 
                 <button class="btn btn-primary" type="submit">
                     <i class="fas fa-edit"></i> 
-                    Submit
+                    Create Questions
                 </button>
                 
-                <a href="/book/list" class="btn btn-warning">
+                <a href="/surveys/list" class="btn btn-warning">
                     <i class="fas fa-undo"></i> 
                     Cancel
                 </a>
