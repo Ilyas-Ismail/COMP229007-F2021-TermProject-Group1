@@ -1,0 +1,38 @@
+        <div class="col-md-11">
+            <br>
+            <table class="table table-bordered table-hover">
+                <!-- Header Row-->
+                <tr class="table">
+                    <th class="text-center col-8">Title</th>
+                    <!-- <th class="text-center col-2">Questions</th>
+                    <th class="text-center col-4">Choices</th> -->
+                    <th class="text-center col-2" colspan="2">Actions</th>
+                </tr>
+
+                <!-- Repeatable Template Row -->
+
+                <% for(let i = 0; i < surveys.length; i++) { %>
+                    <tr class="table">
+                        
+                        <td class="text-center"><a href="/surveys/survey/<%= surveys[i]._id %>">
+                            <%= surveys[i].Title %>
+                        </a></td>
+                        <!-- <td class="text-center col-2"><%= surveys[i].Questions %></td>
+                        <td class="text-center col-4"><%= surveys[i].Choices %></td> -->
+                        <td class="text-center col-1">
+                            <a href="/surveys/edit/<%= surveys[i]._id %>" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pencil-alt"></i> Edit</a>
+                        </td>
+                        <td class="text-center col-1">
+                            <a href="/surveys/delete/<%= surveys[i]._id %>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                            <i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
+                        <!-- <td class="text-center col-1">
+                            <a href="/surveys/addquestion/<%= surveys[i]._id %>" class="btn btn-primary align-self-end" role="button">
+                            <i class="fas fa-plus-circle"></i> Questions</a>              
+                        </td> -->
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+        
