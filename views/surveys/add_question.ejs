@@ -18,6 +18,7 @@
                         name="Title" 
                         value="<%= survey.Title %>"
                         required>
+                    <!-- A hidden input to hold a value for if-else statements at the bottom of this template -->
                     <input type="hidden"
                         name="title"
                         value="<%= title %>"
@@ -42,6 +43,9 @@
                         name="Choices"
                         value=""
                         >
+                    <!-- Since the maximum number of choices is 10, -->
+                    <!-- Generate left 9 textboxes and make those invisible -->
+                    <!-- to avoid re-rendering this page and lose all the user inputs -->
                     <% for(let i = 0; i < 9; i++) { %>
                         <input type="text" class="form-control"
                         id="surveyTextField"
@@ -59,23 +63,29 @@
                 <br />
                 <br />
                 <br />
+                <!-- When the user not came here by clicking on the edit button, this button will be showed up -->
                 <% if (title != 'Edit Survey') { %>
                 <button class="btn btn-primary" type="submit" name="btn" value="next">
                     <i class="fas fa-edit"></i> 
                     Next Question
                 </button>
                 <% } %>
-
+                <!-- Send the data in the form to process an adding Q & C procedure -->
+                <!-- It performs an action almost the same as Next Quesiton button -->
+                <!-- The only difference is Done button redirect the user to the list -->
+                <!-- while Next Quesiton button redirect the user to the add_question page -->
                 <button class="btn btn-primary" type="submit" name="btn" value="done">
                     <i class="fas fa-edit"></i> 
                     Done
                 </button>
+                <!-- Redirect the user to the edit page -->
                 <% if (title == 'Edit Survey') { %>
                     <a href="/surveys/edit/<%= survey._id %>" class="btn btn-warning" type="submit">
                         <i class="fas fa-undo"></i> 
                         Cancel
                     </a>
                 <% } else { %>
+                <!-- Redirect the user to the survey list -->
                 <button class="btn btn-warning" type="submit" name="btn" value="cancel">
                     <i class="fas fa-undo"></i> 
                     Cancel

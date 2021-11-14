@@ -37,6 +37,7 @@
                 <br />
                 <label for="surveyTextField">Choices</label>
                 <div id="divChoices" class="form-group">
+                    <!-- Generate textboxes to hold choices already filled in with a value by the user -->
                     <% for(let i = 0; i < survey.Choices[index].length; i++) { %>
                     <input type="text" class="form-control"
                         id="surveyTextField"
@@ -45,6 +46,9 @@
                         value="<%= survey.Choices[index][i]%>"
                         >
                     <% } %>
+                    <!-- Generate empty textboxes just in case the user want to add choices -->
+                    <!-- The maximum number of choices is 10, and i starts from the number of choices stored in the db -->
+                    <!-- because choices holding a real value already have been generated right above -->
                     <% for(let i = survey.Choices[index].length; i < 10; i++) { %>
                         <input type="text" class="form-control"
                         id="surveyTextField"
@@ -63,12 +67,12 @@
                 <br />
                 <br />
 
-
+                <!-- A button for sending the data in the form to process an editing Q & C procedure -->
                 <button class="btn btn-primary" type="submit" name="btn" value="done">
                     <i class="fas fa-edit"></i> 
                     Save
                 </button>
-
+                <!-- Return to the edit view page -->
                 <a href="/surveys/edit/<%= survey._id %>" class="btn btn-warning" type="submit">
                     <i class="fas fa-undo"></i> 
                     Cancel

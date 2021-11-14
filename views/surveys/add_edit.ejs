@@ -45,17 +45,19 @@
                 <br />
                 <br /> 
                 <% if (title == 'Edit Survey') { %>
+                    <!-- When the user came here by clicking on the edit button, Save button will be showed up -->
                     <button class="btn btn-primary" type="submit">
                         <i class="fas fa-edit"></i> 
                         Save
                     </button>
                 <% } else {%>
+                    <!-- When the user came here by clicking on the new survey button, Create questions button will be showed up -->
                     <button class="btn btn-primary" type="submit">
                         <i class="fas fa-edit"></i> 
                         Create Questions
                     </button>
                 <% } %>
-                
+                <!-- Return to the survey list -->
                 <a href="/surveys/list" class="btn btn-warning">
                     <i class="fas fa-undo"></i> 
                     Cancel

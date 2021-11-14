@@ -6,6 +6,7 @@
 let Survey = require('../models/mc_survey');
 var User = require('../models/users');
 
+// Displaying the survey list
 module.exports.surveys = function(req, res, next) {  
     Survey.find((err, surveys) => {
         if(err)
@@ -22,6 +23,7 @@ module.exports.surveys = function(req, res, next) {
     });
 }
 
+// Displaying the contents that a survay object holds
 module.exports.close_up = (req, res, next) => {
     
     let id = req.params.id;
@@ -43,8 +45,7 @@ module.exports.close_up = (req, res, next) => {
     });
 }
 
-// Displays the view used to add a survey
-
+// Displays the view used to add title of a survey
 module.exports.displayAddPage = (req, res, next) => {
     // create a new survey object
     let newSurvey = Survey();
@@ -61,6 +62,9 @@ module.exports.displayAddPage = (req, res, next) => {
 
 module.exports.processAddPage = (req, res, next) => {
 
+    // Create a new object to hold id and title
+    // targetIndex is just for possible usages
+    // not even used in this app. I forgot to remove it.
     let newSurvey = Survey({
         _id: req.body.id,
         Title: req.body.Title,
@@ -79,14 +83,13 @@ module.exports.processAddPage = (req, res, next) => {
         }
         else
         {
-            // redirect
+            // redirect to add_question page to add a question
             res.redirect('/surveys/addquestion/' + newSurvey._id);
         }
     });
 }
 
 // Displays the view for the edit page
-
 module.exports.displayEditPage = (req, res, next) => {
     
     let id = req.params.id;
@@ -110,8 +113,7 @@ module.exports.displayEditPage = (req, res, next) => {
     
 }
 
-// Handles the processing of the edits done to the survey
-
+// NOT USED. Just keeping it for possible usages
 module.exports.processEditPage = (req, res, next) => {
     
     let id = req.params.id
@@ -138,6 +140,7 @@ module.exports.processEditPage = (req, res, next) => {
     });
 }
 
+// Displaying the edit title page
 module.exports.displayEditTitlePage = (req, res, next) => {
     
     let id = req.params.id;
@@ -162,7 +165,6 @@ module.exports.displayEditTitlePage = (req, res, next) => {
 }
 
 // Handles the processing of the edits done to the survey
-
 module.exports.processEditTitlePage = (req, res, next) => {
     
     let id = req.params.id
@@ -176,11 +178,15 @@ module.exports.processEditTitlePage = (req, res, next) => {
         }
         else
         {
+            // redirect the user to the edit page
+            // better than redirecting the user to the list
+            // when the user finished to edit the title
             res.redirect('/surveys/edit/' + id);
         }
     });
 }
 
+// Displaying the edit question page
 module.exports.displayEditQuestionPage = (req, res, next) => {
     
     let id = req.params.id;
@@ -207,7 +213,6 @@ module.exports.displayEditQuestionPage = (req, res, next) => {
 }
 
 // Handles the processing of the edits done to the survey
-
 module.exports.processEditQuestionPage = (req, res, next) => {
     
     let id = req.params.id
@@ -215,29 +220,12 @@ module.exports.processEditQuestionPage = (req, res, next) => {
     let choices = req.body.Choices;
     choices = choices.filter(item => item != "");
 
-    // Survey.findById(id, (err, survey) => {
-    //     if(err)
-    //     {
-    //         console.log(err);
-    //         res.end(err);
-    //     }
-    //     else
-    //     {
-    //         survey.Question[index] = req.body.Questions;
-    //         survey.Choices[index] = choices;
-    //         res.redirect('/surveys/edit/' + id);
-    //         // display the edit view
-    //         // res.render('surveys/edit_question', {
-    //         //     title: 'Edit Survey', 
-    //         //     survey: survey,
-    //         //     index: idx
-    //         // })
-    //     }
-    // });
-
+    // A procedure to add values to a specific index in an array
     update = { "$set": {} };
     update["$set"]["Questions."+index] = req.body.Questions;
     update["$set"]["Choices."+index] = choices;
+
+    // update the db
     Survey.update({_id: id}, update, (err) => {
         if(err)
         {
@@ -246,27 +234,14 @@ module.exports.processEditQuestionPage = (req, res, next) => {
         }
         else
         {
+            // Redirect the user to the edit page
             res.redirect('/surveys/edit/' + id);
         }
-    })
+    });
 
-    // Survey.updateOne({_id: id}, {
-    //     $set : {"Questions." + index : req.body.Questions}
-    // }, (err) => {
-    //     if(err)
-    //     {
-    //         console.log(err);
-    //         res.end(err);
-    //     }
-    //     else
-    //     {
-    //         res.redirect('/surveys/edit/' + id);
-    //     }
-    // });
 }
 
 // Displays the view to add a question and choices
-
 module.exports.displayQuestionPage = (req, res, next) => {
     
     let id = req.params.id;
@@ -280,7 +255,7 @@ module.exports.displayQuestionPage = (req, res, next) => {
         }
         else
         {
-            // display the edit view
+            // display the edit Q & C view
             res.render('surveys/add_question', {
                 title: 'Add Question', 
                 survey: survey
@@ -291,14 +266,17 @@ module.exports.displayQuestionPage = (req, res, next) => {
 }
 
 // Handles the processing of adding a question with choices
-
 module.exports.processQuestionPage = (req, res, next) => {
     
     let id = req.params.id;
+    // Get the value of the button the user clicked on
+    // You can check the values in add_quesiton.ejs
     let inputValue = req.body.btn;
     let choices = req.body.Choices;
     choices = choices.filter(item => item != "");
 
+    // Deleting a survey object in the db
+    // when the user clicked on cancel button in new survey mode
     if (inputValue == 'cancel') {
         res.redirect('/surveys/delete/' + id);
     }
@@ -313,6 +291,10 @@ module.exports.processQuestionPage = (req, res, next) => {
         });
 
         Survey.updateOne({_id: id}, {
+            // push questions and choices into the arrays in the db
+            // if you put an object(e.g. updated above) here,
+            // it overwrites the existing object in the db
+            // which means you will lose all the Q & C previously stored in the db
             $push: { Questions: req.body.Questions,
                      Choices: choices }
         }, (err) => {
@@ -323,7 +305,9 @@ module.exports.processQuestionPage = (req, res, next) => {
             }
             else
             {
+                // if the user clicked on the Next Question button, this will run
                 if (inputValue == 'next') {
+                    // Don't mind about this stupid targetIndex
                     updated.targetIndex = updated.targetIndex + 1;
                     Survey.findById(id, (err, survey) => {
                         if(err)
@@ -333,6 +317,7 @@ module.exports.processQuestionPage = (req, res, next) => {
                         }
                         else
                         {
+                            // Let the user add more questions
                             res.render('surveys/add_question', {
                                 title: 'Add Question', 
                                 survey: survey
@@ -340,6 +325,7 @@ module.exports.processQuestionPage = (req, res, next) => {
                         }
                     });
                 }
+                // If the user clicked on the Done button, rediect the user to the list
                 else if (inputValue == 'done'){
                     res.redirect('/surveys/list');
                 }
@@ -365,6 +351,7 @@ module.exports.processQuestionPage = (req, res, next) => {
     // };
 }
 
+// Diplaying an add_question page when the user is in the edit mode
 module.exports.displayEditAddQPage = (req, res, next) => {
     
     let id = req.params.id;
@@ -389,7 +376,8 @@ module.exports.displayEditAddQPage = (req, res, next) => {
 }
 
 // Handles the processing of adding a question with choices
-
+// Almost the same as processQuestionPage above
+// The reason we have this funciton is we have seperated  ejs files for editing from adding.
 module.exports.processEditAddQPage = (req, res, next) => {
     
     let id = req.params.id;
@@ -397,6 +385,7 @@ module.exports.processEditAddQPage = (req, res, next) => {
     choices = choices.filter(item => item != "");
 
         Survey.updateOne({_id: id}, {
+            // Not to delete already stored Q & C in the db
             $push: { Questions: req.body.Questions,
                      Choices: choices }
         }, (err) => {
@@ -407,11 +396,13 @@ module.exports.processEditAddQPage = (req, res, next) => {
             }
             else
             {
+                // Redirecting the user to the edit page
                 res.redirect('/surveys/edit/'+id);
             }
         });
 }
 
+// Get rid of a survey object from the db
 module.exports.performDelete = (req, res, next) => {
     
     let id = req.params.id;
@@ -425,7 +416,7 @@ module.exports.performDelete = (req, res, next) => {
         }
         else
         {
-            // refresh
+            // Refresh or redirect the user to the db
             res.redirect('/surveys/list');
         }
     });

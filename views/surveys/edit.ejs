@@ -15,14 +15,17 @@
                 <br/>
                 <br/>
                 <br/>
+                <!-- double for-loop start -->
                 <% for(let i = 0; i < survey.Questions.length; i++) { %>
                 <div class="form-group">
+                    <!-- print out the questions -->
                     <h5>Q: <%= survey.Questions[i] %></h4>
                 </div>
                 <br/>
                 <div class="container">
                 <% for(let j = 0; j < survey.Choices[i].length; j++) { %>
                 <div class="form-group">
+                    <!-- print out the choices -->
                     <label for="choice<%= i %>">
                         <%= survey.Choices[i][j] %>
                     </label>
@@ -31,6 +34,7 @@
                 <% } %>
                 </div>
                 <br/>
+                <!-- A link to redirect the user to edit a specific question & choices of it -->
                 <a href="/surveys/edit/question/<%= survey._id %>/<%= i %>" class="btn btn-primary">
                     <i class="fas fa-edit"></i> 
                     Edit this question
@@ -40,10 +44,12 @@
                 <br/>
                 <% } %>
                 <br/>
+                <!-- A link to add a new question to the current survey -->
                 <a href="/surveys/editadd/<%= survey._id %>" class="btn btn-primary">
                     <i class="fas fa-edit"></i> 
                     Add a question
                 </a>
+                <!-- Return to the list -->
                 <a href="/surveys/list" class="btn btn-warning">
                     <i class="fas fa-undo"></i> 
                     Return
