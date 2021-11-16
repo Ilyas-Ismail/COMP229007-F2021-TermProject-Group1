@@ -1,7 +1,15 @@
 body {
+  padding-bottom: 100px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+}
+
+.Btn{
+  padding: 5px;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
 }

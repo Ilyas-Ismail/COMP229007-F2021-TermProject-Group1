@@ -6,19 +6,35 @@
             <h1><%= title %></h1>
 
                 <div class="form-group">
-                    <label for="surveyTextField">Title: </label>
-                    <%= surveys.Title %>
+
+                    <h2>Survey Title: <%= survey.Title %></h2>
                 </div>
+                <br/>
+                <br/>
+                <br/>
+                <% for(let i = 0; i < survey.Questions.length; i++) { %>
                 <div class="form-group">
-                    <label for="surveyTextField">Questions: </label>
-                    <%= surveys.Questions %>
+                    <h5>Q: <%= survey.Questions[i] %></h4>
                 </div>
+                <br/>
+                <div class="container">
+                <% for(let j = 0; j < survey.Choices[i].length; j++) { %>
                 <div class="form-group">
-                    <label for="surveyTextField">Choices: </label>
-                    <%= surveys.Choices %>
+                    <input type="radio" id="choice<%= i %><%= j %>" name="choice<%= i %>" value="<%= j %>">
+                    <label for="choice<%= i %><%= j %>">
+                        <%= survey.Choices[i][j] %>
+                    </label>
                 </div>
                 <br />
-                
+                <% } %>
+                </div>
+                <br/>
+                <% } %>
+
+                <a href="/surveys/list" class="btn btn-primary">
+                    <i class="fas fa-edit"></i>
+                    Submit
+                </a>
                 <a href="/surveys/list" class="btn btn-warning">
                     <i class="fas fa-undo"></i> 
                     Return

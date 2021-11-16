@@ -31,6 +31,7 @@ mongoDB.once('open', ()=>{
 // associating variables to route the other js files.
 var indexRouter = require('../routes/index');
 var usersRouter = require('../routes/users');
+var surveyRouter = require('../routes/surveys');
 
 var app = express();
 
@@ -48,6 +49,7 @@ app.use(express.static(path.join(__dirname, '../scripts')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/surveys', surveyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

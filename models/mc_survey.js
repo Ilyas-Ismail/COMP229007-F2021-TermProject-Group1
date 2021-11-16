@@ -9,19 +9,20 @@ let mc_surveySchema = mongoose.Schema(
     {
         Title: {
             type: String,
-            unique: true,
             required: true,
         },
         UserID: String,
         Questions: {
-            type: [String],
-            required: true,
+            type: [],
         },
-        Choices: [[]]
+        Choices: {
+            type: [[]],
+        },
+        targetIndex: Number
     },
     {
-        collection: "mc_survey"
+        collection: "text_survey"
     }
 );
 
-module.exports = mongoose.model('Book', mc_surveySchema);
+module.exports = mongoose.model('Survey', mc_surveySchema);
