@@ -3,22 +3,23 @@
 // Date: Nov 11, 2021
 
 let mongoose = require('mongoose');
+let bcrypt = require('bcrypt');
 let passportLocalMongoose = require('passport-local-mongoose');
 
 // creating a blueprint for users.
 
 let userModel = mongoose.Schema(
     {
-        Username: {
+        username: {
             type: String,
             unique: true,
             required: true,
         },
-        Password: {
+        password: {
             type: String,
             required: true,
         },
-        Email: {
+        email: {
             type: String,
             unique: true,
             required: true,

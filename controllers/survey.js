@@ -4,7 +4,7 @@
 
 // create a reference to the model
 let Survey = require('../models/mc_survey');
-var User = require('../models/users');
+var Users = require('../models/users');
 
 module.exports.surveys = function(req, res, next) {  
     Survey.find((err, surveys) => {
