@@ -6,6 +6,7 @@ import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { BasePageComponent } from './base-page/base-page.component';
 import { SurveysComponent } from './surveys/surveys.component';
+// import { AllSurveysModule } from '../all-surveys/all-surveys.module';
 
 
 @NgModule({
