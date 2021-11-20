@@ -14,13 +14,13 @@
         <div *ngFor='let survey of surveys'>
             <tr class="table">
                 
-                <td class="text-center"><a href="/surveys/survey/{{ survey._id }}">
+                <td class="text-center"><a href="/add_edit" (click)="selectedSurvey=survey">
                     {{ survey.title }}
                 </a></td>
                 <!-- <td class="text-center col-2"><%= surveys[i].Questions %></td>
                 <td class="text-center col-4"><%= surveys[i].Choices %></td> -->
                 <td class="text-center col-1">
-                    <a href="/surveys/edit/{{ survey._id }}" class="btn btn-primary btn-sm">
+                    <a href="/edit/{{ survey._id }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-pencil-alt"></i> Edit</a>
                 </td>
                 <td class="text-center col-1">

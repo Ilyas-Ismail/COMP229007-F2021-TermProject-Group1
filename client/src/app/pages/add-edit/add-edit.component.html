@@ -1,0 +1,9 @@
+<div class="m-2">
+    <div class="bg-info text-white mb-2 p-2">{{ jsonMCSurvey }}</div>
+    <div class="form-group">
+        <label>Title </label>
+        <input class="form-control" [(ngModel)]="newMCSurvey.title"/>
+    </div>
+    <button class="btn btn-primary" (click)="addMCSurvey(newMCSurvey)">Add survey</button>
+    <!-- <p>test is {{ getSelectedSurvey().title }}</p> -->
+</div>

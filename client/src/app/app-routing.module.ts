@@ -5,6 +5,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SurveysComponent } from './pages/surveys/surveys.component';
+import { AddEditComponent } from './pages/add-edit/add-edit.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent, data: {title: 'Contact'}},
   {path: 'surveys', component: SurveysComponent, data: {title: 'Surveys'}},
   {path: 'all-surveys', component: AllSurveysComponent, data: {title: 'All Surveys'}},
+  {path: 'add_edit', component: AddEditComponent, data: {title: 'Add_Edit'}},
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
