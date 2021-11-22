@@ -4,7 +4,8 @@
 
 // create a reference to the model
 let Survey = require('../models/mc_survey');
-var Users = require('../models/users');
+var User = require('../models/users');
+
 
 module.exports.surveys = function(req, res, next) {  
     Survey.find((err, surveys) => {
@@ -113,19 +114,21 @@ module.exports.displayEditPage = (req, res, next) => {
 // Handles the processing of the edits done to the survey
 
 module.exports.processEditPage = (req, res, next) => {
-    
+
     let id = req.params.id
 
     // Create a survey object, UserID will be added after authentication
-    let updated = Survey({
-        _id: req.body.id,
-        // UserID: req.body.UserID,
-        Title: req.body.Title,
-        // Questions: req.body.Questions,
-        // Choices: req.body.Choices
-    });
+    // let updated = Survey({
+    //     _id: req.body.id,
+    //     // UserID: req.body.UserID,
+    //     Title: req.body.Title,
+    //     // Questions: req.body.Questions,
+    //     // Choices: req.body.Choices
+    // });
 
-    Survey.updateOne({_id: id}, updated, (err) => {
+    Survey.updateOne({_id: id}, {
+        Title: req.body.Title
+    }, (err, updated) => {
         if(err)
         {
             console.log(err);

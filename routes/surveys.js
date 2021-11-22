@@ -4,21 +4,9 @@
 
 var express = require('express');
 var router = express.Router();
-let surveyController = require('../controllers/survey');
-let mongoose = require('mongoose');
-let passport = require('passport');
+let surveyController = require('../controllers/api');
 
-function requireAuth(req, res, next)
-{
-    // check if the user is logged in
-    if(!req.isAuthenticated())
-    {
-        return res.redirect('/login');
-    }
-    next();
-}
-
-router.get('/survey/:id', surveyController.close_up);
+router.get('/details/:id', surveyController.close_up);
 
 router.get('/edit/:id', surveyController.displayEditPage);
 

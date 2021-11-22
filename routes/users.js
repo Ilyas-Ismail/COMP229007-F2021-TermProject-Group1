@@ -4,15 +4,16 @@
 
 var express = require('express');
 var router = express.Router();
- userController = require('../controllers/users');
+
+userController = require('../controllers/users');
 
 /* GET users listing. */
 
-router.get('/signin', userController.displayLoginPage);
+// router.get('/signin', userController.displayLoginPage);
 
 router.post('/signin', userController.processLoginPage);
 
-router.get('/register', userController.displayRegisterPage);
+// router.get('/register', userController.displayRegisterPage);
 
 router.post('/register', userController.processRegisterPage);
 
@@ -20,6 +21,6 @@ router.post('/register', userController.processRegisterPage);
 //   res.render('auth/register' , { title: 'Register' });
 // });
 
-router.get('/logout', userController.performLogout);
+// router.get('/logout', userController.performLogout);
 
 module.exports = router;

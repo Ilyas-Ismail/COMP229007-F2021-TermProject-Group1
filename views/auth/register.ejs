@@ -1,58 +1,50 @@
 <%- include ../partials/header.ejs %>
 
-<!-- Content for the Add_Edit page -->
-<div class="container">
+<main class="container">
+  
+    
     <div class="row">
-        <div class="offset-md-3 col-md-6">
-            <h1><%= title %></h1>
-
-            <form class="form" method="POST">
-                <div class="form-group">
-                    <input type="hidden"
-                        name="id"
-                        value="<%= user._id %>"
-                    >
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control"
-                        id="username"
-                        placeholder="Enter the Contact Name"
-                        name="username" 
-                        required>
-                </div>
-                <br />
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="text" class="form-control"
-                    id="password"
-                    placeholder="Password"
-                    name="password" 
-                    required>
-                </div>
-                <br />
-                <div class="form-group">
-                    <label for="email">E-Mail</label>
-                    <input type="text" class="form-control"
-                    id="email"
-                    placeholder="Enter E-Mail"
-                    name="email" 
-                    >
-                </div>
-                <br />
-
-                <button class="btn btn-primary" type="submit">
-                    <i class="fas fa-edit"></i> 
-                    Submit
-                </button>
+        <div class="offset-md-4 col-md-4">
+            <h1>Please Register</h1>
+            <form method="POST" autocomplete="off">
+                <fieldset class="form-group">
+                    <label for="username">Username: </label>
+                    <input type="text" class="from-control"
+                    name= "username" placeholder="Enter username"
+                    id="username" required autofocus>
+                </fieldset>
+    
+                <fieldset class="form-group">
+                    <label for="password">Password: </label>
+                    <input type="password" class="from-control"
+                    name= "password" placeholder="Enter password"
+                    id="password" required>
+                </fieldset>
+    
+                <fieldset class="form-group">
+                    <label for="email">Email: </label>
+                    <input type="email" class="from-control"
+                    name= "email" placeholder="Enter Email"
+                    id="email" required>
+                </fieldset>
                 
-                <a href="/" class="btn btn-warning">
-                    <i class="fas fa-undo"></i> 
-                    Cancel
-                </a>
-
+                <fieldset class="form-group">
+                    <label for="displayName">Displayname: </label>
+                    <input type="displayName" class="from-control"
+                    name= "displayName" placeholder="Enter Display Name"
+                    id="displayName" required>
+                </fieldset>
+                
+                <fieldset class="form-group text-right">
+                    <input type="submit" class="btn btn-success" value="Register">
+                    <a href="/">
+                        <input type="buttion" class="btn btn-warning" value="Cancel">
+                    </a>
+                </fieldset>
             </form>
         </div>
-
     </div>
-</div>
-
-<%- include ../partials/footer.ejs %>
+    
+    
+    </main>
+<% include ../partials/footer.ejs %>
