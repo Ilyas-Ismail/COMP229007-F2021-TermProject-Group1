@@ -6,19 +6,23 @@
 let Survey = require('../models/mc_survey');
 var User = require('../models/users');
 
-
 module.exports.surveys = function(req, res, next) {  
     Survey.find((err, surveys) => {
         if(err)
         {
-            return console.error(err);
+            // return console.error(err);
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while listing surveys."
+            });
         }
         else
         {
-            res.render('surveys/list', {
-                title: 'Surveys', 
-                surveys: surveys
-            })            
+            // res.render('surveys/list', {
+            //     title: 'Surveys', 
+            //     surveys: surveys
+            // })            
+            res.send(surveys)
         }
     });
 }
@@ -30,16 +34,24 @@ module.exports.close_up = (req, res, next) => {
     Survey.findById(id, (err, selectedSurvey) => {
         if(err)
         {
-            console.log(err);
-            res.end(err);
+            // console.log(err);
+            // res.end(err);
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while retrieving a survey."
+            });
         }
         else
         {
+            if (!selectedSurvey)
+                res.status(404).send({ message: "The survey does not exist" });
+            else
+                res.send(selectedSurvey);
             //show the edit view
-            res.render('surveys/close_up', {
-                title: req.body.title, 
-                survey: selectedSurvey
-            })
+            // res.render('surveys/close_up', {
+            //     title: req.body.title, 
+            //     survey: selectedSurvey
+            // })
         }
     });
 }
@@ -75,13 +87,18 @@ module.exports.processAddPage = (req, res, next) => {
     Survey.create(newSurvey, (err, survey) =>{
         if(err)
         {
-            console.log(err);
-            res.end(err);
+            // console.log(err);
+            // res.end(err);
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while creating a new survey."
+            });
         }
         else
         {
             // redirect
-            res.redirect('/surveys/addquestion/' + newSurvey._id);
+            // res.redirect('/surveys/addquestion/' + newSurvey._id);
+            res.send(survey);
         }
     });
 }
@@ -114,21 +131,19 @@ module.exports.displayEditPage = (req, res, next) => {
 // Handles the processing of the edits done to the survey
 
 module.exports.processEditPage = (req, res, next) => {
-
+    
     let id = req.params.id
 
     // Create a survey object, UserID will be added after authentication
-    // let updated = Survey({
-    //     _id: req.body.id,
-    //     // UserID: req.body.UserID,
-    //     Title: req.body.Title,
-    //     // Questions: req.body.Questions,
-    //     // Choices: req.body.Choices
-    // });
+    let updated = Survey({
+        _id: req.body.id,
+        // UserID: req.body.UserID,
+        Title: req.body.Title,
+        // Questions: req.body.Questions,
+        // Choices: req.body.Choices
+    });
 
-    Survey.updateOne({_id: id}, {
-        Title: req.body.Title
-    }, (err, updated) => {
+    Survey.updateOne({_id: id}, updated, (err) => {
         if(err)
         {
             console.log(err);
@@ -168,18 +183,32 @@ module.exports.displayEditTitlePage = (req, res, next) => {
 
 module.exports.processEditTitlePage = (req, res, next) => {
     
+    if (!req.body){
+        return res.status(400).send({
+            message: "Data is required to be updated"
+        });
+    }
+
     let id = req.params.id
 
     // update date
-    Survey.updateOne({_id: id}, {Title: req.body.Title}, (err) => {
+    Survey.updateOne({_id: id}, {Title: req.body.Title}, (err, updated) => {
         if(err)
         {
-            console.log(err);
-            res.end(err);
+            // console.log(err);
+            // res.end(err);
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while updating a survey."
+            });
         }
         else
         {
-            res.redirect('/surveys/edit/' + id);
+            if (!updated)
+                res.status(404).send({ message: "Cannot find the targeted survey" });
+            else
+                res.send(updated);
+            // res.redirect('/surveys/edit/' + id);
         }
     });
 }
