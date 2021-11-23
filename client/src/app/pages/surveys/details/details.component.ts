@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DetailsComponent implements OnInit {
   survey!: Survey;
-  qnc!: any[];
 
   constructor(
     private surveyService: SurveyService,
