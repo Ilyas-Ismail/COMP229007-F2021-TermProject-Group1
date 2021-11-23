@@ -5,17 +5,22 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+userController = require('../controllers/users');
 
-router.get('/signin', function(req, res, next) {
-  res.render('auth/signin', { title: 'Sign in' });
-});
+/* GET users listing. */
+
+router.get('/signin', userController.displayLoginPage);
+
+router.post('/signin', userController.processLoginPage);
+
+router.get('/register', userController.displayRegisterPage);
+
+router.post('/register', userController.processRegisterPage);
 
 router.get('/register' , function(req, res, next){
   res.render('auth/register' , { title: 'Register' });
 });
+
+router.get('/logout', userController.performLogout);
 
 module.exports = router;

@@ -11,6 +11,7 @@ var logger = require('morgan');
 
 let session = require('express-session');
 let passport = require('passport');
+require('./passport')(passport);
 
 let passportLocal = require('passport-local');
 let localStrategy = passportLocal.Strategy;
@@ -19,7 +20,7 @@ let bcrypt = require('bcrypt');
 
 // setting up the database.
 let mongoose = require('mongoose');
-let dbConfig = require('./db');
+let dbConfig = require('./config');
 
 // connect to the database and return connection.
 mongoose.connect(dbConfig.URI, 
@@ -79,16 +80,6 @@ app.use('/api/surveys', surveyRouter);
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/static/index.html'));
 });
-
-// create a User Model Instance
-let userModel = require('../models/users');
-let User = userModel.userModel;
-
-passport.use(User.createStrategy());
-// console.log(typeof User.createStrategy());
-// serialize and deserialize the User info 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 let errorHandler = require('./error-handler');
 app.use(errorHandler);
