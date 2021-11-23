@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { BasePageComponent } from './base-page/base-page.component';
-import { SurveysComponent } from './surveys/surveys.component';
 import { ListComponent } from './surveys/list/list.component';
 import { DetailsComponent } from './surveys/details/details.component';
 import { ListTableComponent } from './surveys/list-table/list-table.component';
@@ -16,10 +15,9 @@ import { EditQuestionComponent } from './surveys/edit/edit-question.component';
 
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, RouterModule],
+    imports: [BrowserModule, FormsModule, RouterModule, ReactiveFormsModule],
     declarations: [
         HomeComponent,
-        SurveysComponent,
         BasePageComponent,
         ListComponent,
         DetailsComponent,
@@ -28,11 +26,10 @@ import { EditQuestionComponent } from './surveys/edit/edit-question.component';
         AddQuestionComponent,
         EditSurveyComponent,
         EditTitleComponent,
-        EditQuestionComponent
+        EditQuestionComponent,
     ],
     exports: [
         HomeComponent,
-        SurveysComponent,
         BasePageComponent
     ]
 })

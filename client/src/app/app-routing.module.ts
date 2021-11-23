@@ -16,13 +16,14 @@ const routes: Routes = [
   // add a new survey w/ title
   {path: 'surveys/new', component: AddSurveyComponent, data: {title: 'New Survey'}},
   // add Q & C
-  {path: 'surveys/new/add', component: AddQuestionComponent, data: {title: 'New Survey'}},
+  {path: 'surveys/new/question/:id', component: AddQuestionComponent, data: {title: 'New Survey'}},
   // edit page
-  {path: 'surveys/edit', component: EditSurveyComponent, data: {title: 'Edit Survey'}},
+  {path: 'surveys/edit/view/:id', component: EditSurveyComponent, data: {title: 'Edit Survey'}},
   // edit title
-  {path: 'surveys/edit/:id', component: EditTitleComponent, data: {title: 'Edit Survey'}},
+  {path: 'surveys/edit/title/:id', component: EditTitleComponent, data: {title: 'Edit Survey'}},
   // edit Q & C
-  {path: 'surveys/edit/:id/:idx', component: EditQuestionComponent, data: {title: 'Edit Survey'}},
+  {path: 'surveys/edit/question/:id/:idx', component: EditQuestionComponent, data: {title: 'Edit Survey'}},
+  // log in & out
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 

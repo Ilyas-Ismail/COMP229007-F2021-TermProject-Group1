@@ -20,15 +20,15 @@ export class SurveyService {
     return this.http.get(`${baseUrl}/details/${id}`);
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post(baseUrl, data);
+  create(data: any, path: any): Observable<any> {
+    return this.http.post(`${baseUrl}/${path}`, data);
   }
 
-  update(id: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/${id}`, data);
+  update(data: any, path: any): Observable<any> {
+    return this.http.put(`${baseUrl}/${path}`, data);
   }
 
   delete(id: any): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`);
+    return this.http.delete(`${baseUrl}/delete/${id}`);
   }
 }

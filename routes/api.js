@@ -6,7 +6,7 @@ var express = require('express');
 var router = express.Router();
 let surveyController = require('../controllers/api');
 
-router.get('/survey/:id', surveyController.close_up);
+router.get('/details/:id', surveyController.close_up);
 
 router.get('/edit/:id', surveyController.displayEditPage);
 

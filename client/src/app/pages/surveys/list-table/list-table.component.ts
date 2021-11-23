@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Survey } from 'src/app/models/survey.model';
 import { SurveyService } from 'src/app/services/survey.service';
-import { ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-list-table',
@@ -14,8 +13,7 @@ export class ListTableComponent implements OnInit {
 
   constructor(
     private surveyService: SurveyService,
-    private route: ActivatedRoute,
-    private router: Router) { }
+  ) { }
 
   ngOnInit(): void {
     this.getSurveys();
@@ -27,6 +25,19 @@ export class ListTableComponent implements OnInit {
         next: (data) => {
           this.surveys = data;
           console.log(this.surveys);
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  deleteSurvey(event: any): void{
+    if(!confirm('Are you sure?'))
+      return;
+    this.surveyService.delete(event.target.value)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.getSurveys();
         },
         error: (e) => console.error(e)
       });
