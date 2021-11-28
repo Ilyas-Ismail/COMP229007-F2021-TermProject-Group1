@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from "@angular/platform-browser";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { PartialsModule } from '../../partials/partials.module';
@@ -12,6 +13,7 @@ import { AuthService } from "../../services/auth.service"
   imports: [
     CommonModule,
     BrowserModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     PartialsModule
