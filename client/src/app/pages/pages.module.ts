@@ -12,10 +12,16 @@ import { AddQuestionComponent } from './surveys/add/add-question.component';
 import { EditSurveyComponent } from './surveys/edit/edit-survey.component';
 import { EditTitleComponent } from './surveys/edit/edit-title.component';
 import { EditQuestionComponent } from './surveys/edit/edit-question.component';
+import { DeleteComponent } from './surveys/delete/delete.component';
 
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, RouterModule, ReactiveFormsModule],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        RouterModule,
+        ReactiveFormsModule
+    ],
     declarations: [
         HomeComponent,
         BasePageComponent,
@@ -27,6 +33,7 @@ import { EditQuestionComponent } from './surveys/edit/edit-question.component';
         EditSurveyComponent,
         EditTitleComponent,
         EditQuestionComponent,
+        DeleteComponent
     ],
     exports: [
         HomeComponent,

@@ -4,21 +4,41 @@
             <div class="form-group">
                 <h2>Survey Title: {{ survey.Title }}</h2>
             </div>
+            <a routerLink="/surveys/edit/title/{{ survey._id }}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> 
+                Edit title
+            </a>
             <br />
             <br />
             <div class="form-group" *ngFor="let choices of survey.Choices; let i = index">
                 <h5>Q: {{ survey.Questions![i] }} </h5>
-                <br />
                 <div class="container" *ngFor="let choice of choices; let j = index">
                     <div class="form-group">
                         {{ choice }}
                     </div>
-                    <br />
                 </div>
+                <a routerLink="/surveys/edit/question/{{ survey._id }}/{{ i }}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> 
+                    Edit this question
+                </a>
+                <!-- <a routerLink="/surveys/edit/delete/{{ survey._id }}/{{ i }}" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> 
+                    Delete this question
+                </a> -->
+                &nbsp;
+                <button (click)="deleteQuestion($event)" class="btn btn-danger" value="{{ i }}">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button>
+                <br />
                 <br />
             </div>
 
-            <a routerLink="/surveys/list" class="btn btn-warning">
+            <a routerLink="/surveys/new/question/{{ survey._id }}" class="btn btn-primary mt-2">
+                <i class="fas fa-edit"></i> 
+                Add Questions
+            </a>
+            <br>
+            <a routerLink="/surveys/list" class="btn btn-warning mt-2">
                 Back to List
             </a>
         </div>

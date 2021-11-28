@@ -21,10 +21,11 @@ router.post('/add', surveyController.processAddPage);
 // retrieve all surveys
 router.get('/list', surveyController.surveys)
 
-router.post('/edit/title/:id', surveyController.processEditTitlePage);
+router.put('/edit/title/:id', surveyController.processEditTitlePage);
 
-router.post('/edit/question/:id/:idx', surveyController.processEditQuestionPage);
+router.put('/edit/question/:id/:idx', surveyController.processEditQuestionPage);
 
-router.post('/editadd/:id', surveyController.processEditAddQPage);
+// delete a question
+router.put('/edit/delete', surveyController.performDeleteQuestion);
 
 module.exports = router;

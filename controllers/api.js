@@ -97,20 +97,12 @@ module.exports.processQuestionPage = (req, res, next) => {
 // Handles the processing of the edits done to the survey
 module.exports.processEditTitlePage = (req, res, next) => {
     
-    if (!req.body){
-        return res.status(400).send({
-            message: "Data is required to be updated"
-        });
-    }
-
-    let id = req.params.id
+    let id = req.body.id
 
     // update date
-    Survey.updateOne({_id: id}, {Title: req.body.Title}, (err, updated) => {
+    Survey.updateOne({_id: id}, {Title: req.body.title}, (err, updated) => {
         if(err)
         {
-            // console.log(err);
-            // res.end(err);
             res.status(500).send({
                 message:
                   err.message || "Some error occurred while updating a survey."
@@ -122,7 +114,6 @@ module.exports.processEditTitlePage = (req, res, next) => {
                 res.status(404).send({ message: "Cannot find the targeted survey" });
             else
                 res.send(updated);
-            // res.redirect('/surveys/edit/' + id);
         }
     });
 }
@@ -130,48 +121,70 @@ module.exports.processEditTitlePage = (req, res, next) => {
 // Handles the processing of the edits done to the survey
 module.exports.processEditQuestionPage = (req, res, next) => {
     
-    let id = req.params.id
-    let index = req.body.index;
-    let choices = req.body.Choices;
-    choices = choices.filter(item => item != "");
+    let index = req.params.idx;
+    let id = req.body.id
+    let question = req.body.question;
+    let choices = req.body.choices;
+    console.log(req.body.question);
+    console.log(req.body.choices);
 
     update = { "$set": {} };
-    update["$set"]["Questions."+index] = req.body.Questions;
+    update["$set"]["Questions."+index] = question;
     update["$set"]["Choices."+index] = choices;
-    Survey.update({_id: id}, update, (err) => {
+    Survey.update({_id: id}, update, (err, updated) => {
         if(err)
         {
-            console.log(err);
-            res.end(err);
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while updating a survey."
+            });
         }
         else
         {
-            res.redirect('/surveys/edit/' + id);
+            if (!updated)
+                res.status(404).send({ message: "Cannot find the targeted survey" });
+            else
+                res.send(updated);
         }
     })
 }
 
-// Handles the processing of adding a question with choices
-module.exports.processEditAddQPage = (req, res, next) => {
+module.exports.performDeleteQuestion = (req, res, next) => {
     
-    let id = req.params.id;
-    let choices = req.body.Choices;
-    choices = choices.filter(item => item != "");
+    let id = req.body.id;
+    let idx = req.body.idx;
+    console.log(req.body.id);
+    console.log(req.body.questions);
+    console.log(req.body.choices);
 
-        Survey.updateOne({_id: id}, {
-            $push: { Questions: req.body.Questions,
-                     Choices: choices }
-        }, (err) => {
-            if(err)
-            {
-                console.log(err);
-                res.end(err);
-            }
+    // update = { "$set": {} };
+    // update["$set"]["Questions"]["$concatArrays"] = [{"$slice": ["$Questions", idx]}, {"$slice": ["$Questions", {"$add": [1, idx]}]}];
+    // update["$set"]["Choices"]["$concatArrays"] = [{"$slice": ["$Choices", idx]}, {"$slice": ["$Choices", {"$add": [1, idx]}]}];
+
+    // update = { "$set": {} };
+    // update["$set"]["Questions"] = req.body.Questions;
+    // update["$set"]["Choices"] = req.body.Choices;
+    // Delete a question matched with the id from DB
+    Survey.update({_id: id}, {
+            $set: { Questions: req.body.questions,
+                     Choices: req.body.choices }
+    }, (err, updated) => {
+        if(err)
+        {
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while removing a question."
+            });
+        }
+        else
+        {
+            if (!updated)
+                res.status(404).send({ message: "Cannot find the targeted survey" });
             else
-            {
-                res.redirect('/surveys/edit/'+id);
-            }
-        });
+                res.send(updated);
+        }
+    })
+
 }
 
 module.exports.performDelete = (req, res, next) => {
