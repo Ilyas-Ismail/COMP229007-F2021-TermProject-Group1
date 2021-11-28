@@ -41,6 +41,16 @@ var surveyRouter = require('../routes/surveys');
 
 var app = express();
 
+//Redirect all traffic from http to https for running on Heroku.
+function requireHTTPS(req, res, next) {
+  // The 'x-forwarded-proto' check is for Heroku
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+      return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+}
+app.use(requireHTTPS);
+
 // view engine setup
 // app.set('views', path.join(__dirname, '../views'));
 // app.set('view engine', 'ejs');
