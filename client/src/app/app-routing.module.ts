@@ -14,11 +14,12 @@ import { RegisterComponent } from './pages/auth/register.component';
 import { AuthGuard } from "./pages/auth/auth.guard";
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent, data: {title: 'Home'}},
+  {path: 'home', component: HomeComponent},
   {path: 'surveys/list', component: ListComponent, data: {title: 'Survey List'}},
   {path: 'surveys/details/:id', component: DetailsComponent, data: {title: 'Survey Contents'}},
   // add a new survey w/ title
-  {path: 'surveys/new', component: AddSurveyComponent, canActivate: [AuthGuard], data: {title: 'New Survey'}},
+  // {path: 'surveys/new', component: AddSurveyComponent, canActivate: [AuthGuard], data: {title: 'New Survey'}},
+  {path: 'surveys/new', component: AddSurveyComponent, data: {title: 'New Survey'}},
   // add Q & C
   {path: 'surveys/new/question/:id', component: AddQuestionComponent, canActivate: [AuthGuard], data: {title: 'New Survey'}},
   // edit page

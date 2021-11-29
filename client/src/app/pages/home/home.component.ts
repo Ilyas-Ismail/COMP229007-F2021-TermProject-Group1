@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { BasePageComponent } from '../base-page/base-page.component';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent extends BasePageComponent implements OnInit {
+export class HomeComponent{
 
-  constructor(route: ActivatedRoute) {
-    super(route);
-   }
+  constructor(activeRoute: ActivatedRoute) { }
 
-  override ngOnInit(): void {
-  }
+
 
 }

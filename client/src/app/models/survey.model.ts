@@ -1,14 +1,14 @@
 export class Survey {
     _id?: any;
-    Title?: string;
-    UserID?: string;
-    Questions?: string[]
-    Choices?: [string[]]
+    title?: string;
+    userID?: string;
+    questions?: string[]
+    choices?: [Question[]]
 }
 
-export class Survey_qc {
+export class Question {
     _id?: any;
-    SurveyID?: any;
-    Question?: string;
-    Choices?: string[]
+    surveyID?: any;
+    question?: string;
+    choices?: string[]
 }
