@@ -15,8 +15,8 @@ export class SurveyService {
   baseUrl: string;
 
   constructor(private http: HttpClient) {
-      this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/${API_PATH}`;
-     // this.baseUrl = 'https://backendaddress.herokuapp.com/';
+      // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/${API_PATH}`;
+     this.baseUrl = 'https://comp229-group1-backend.herokuapp.com/';
    }
 
   getAll(): Observable<Survey[]> {
