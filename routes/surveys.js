@@ -28,4 +28,7 @@ router.put('/edit/question/:id/:idx', surveyController.processEditQuestionPage);
 // delete a question
 router.put('/edit/delete', surveyController.performDeleteQuestion);
 
+// save a response
+router.post('/addres', surveyController.saveResponse);
+
 module.exports = router;

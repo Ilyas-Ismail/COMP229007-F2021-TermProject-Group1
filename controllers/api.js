@@ -5,6 +5,30 @@
 // create a reference to the model
 let Survey = require('../models/mc_survey');
 var User = require('../models/users');
+let SurveyResponse = require('../models/survey_response');
+
+module.exports.saveResponse = (req, res, next) => {
+
+    let newRes = SurveyResponse({
+        surveyID: req.body.surveyID,
+        choices: req.body.choices
+    });
+
+    // save a new survey in the DB
+    SurveyResponse.create(newRes, (err, rs) =>{
+        if(err)
+        {
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while creating a new survey response."
+            });
+        }
+        else
+        {
+            res.send(rs);
+        }
+    });
+}
 
 module.exports.surveys = function(req, res, next) {  
     Survey.find((err, surveys) => {
