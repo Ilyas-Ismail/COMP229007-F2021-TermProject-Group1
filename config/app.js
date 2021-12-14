@@ -67,7 +67,7 @@ app.use(express.static(path.join(__dirname, '../node_modules')));
 app.use(express.static(path.join(__dirname, '../scripts')));
 
 var corsOptions = {
-  origin: "http://localhost:4200"
+  origin: "https://comp229group1frontend.herokuapp.com"
 };
 app.use(cors(corsOptions));
 
