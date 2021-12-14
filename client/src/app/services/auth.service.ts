@@ -20,7 +20,8 @@ export class AuthService {
   private _redirectUrl: string | undefined;
 
   constructor(private http: HttpClient) {
-      this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/${API_PATH}`;
+      // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/${API_PATH}`;
+      this.baseUrl = 'https://comp229-group1-backend.herokuapp.com/${API_PATH}';
    }
 
   login(data: any): Observable<boolean> {
