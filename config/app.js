@@ -56,7 +56,7 @@ var app = express();
 // app.set('view engine', 'ejs');
 
 // static path for Angular files
-app.use(express.static(path.join(__dirname, '../client/static/')));
+// app.use(express.static(path.join(__dirname, '../client/static/')));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -87,9 +87,9 @@ app.use(passport.initialize());
 // app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/surveys', surveyRouter);
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/static/index.html'));
-});
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../client/static/index.html'));
+// });
 
 let errorHandler = require('./error-handler');
 app.use(errorHandler);
