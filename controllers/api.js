@@ -25,7 +25,8 @@ module.exports.saveResponse = (req, res, next) => {
         }
         else
         {
-            res.send(rs);
+            res.status(200).json(rs);
+            // res.send(rs);
         }
     });
 }
@@ -42,7 +43,8 @@ module.exports.surveys = function(req, res, next) {
         }
         else
         {
-            res.send(surveys)
+            res.status(200).json(surveys);
+            // res.send(surveys)
         }
     });
 }
@@ -63,7 +65,8 @@ module.exports.details = (req, res, next) => {
             if (!selectedSurvey)
                 res.status(404).send({ message: "The survey does not exist" });
             else
-                res.send(selectedSurvey);
+                res.status(200).json(selectedSurvey);
+                // res.send(selectedSurvey);
         }
     });
 }
@@ -87,7 +90,8 @@ module.exports.processAddPage = (req, res, next) => {
         }
         else
         {
-            res.send(survey);
+            res.status(200).json(survey);
+            // res.send(survey);
         }
     });
 }
@@ -113,7 +117,8 @@ module.exports.processQuestionPage = (req, res, next) => {
         }
         else
         {
-            res.send(survey);
+            res.status(200).json(survey);
+            // res.send(survey);
         }
     });
 }
@@ -137,7 +142,8 @@ module.exports.processEditTitlePage = (req, res, next) => {
             if (!updated)
                 res.status(404).send({ message: "Cannot find the targeted survey" });
             else
-                res.send(updated);
+                res.status(200).json(updated);
+                // res.send(updated);
         }
     });
 }
@@ -168,7 +174,8 @@ module.exports.processEditQuestionPage = (req, res, next) => {
             if (!updated)
                 res.status(404).send({ message: "Cannot find the targeted survey" });
             else
-                res.send(updated);
+            res.status(200).json(updated);
+                // res.send(updated);
         }
     })
 }
@@ -205,7 +212,8 @@ module.exports.performDeleteQuestion = (req, res, next) => {
             if (!updated)
                 res.status(404).send({ message: "Cannot find the targeted survey" });
             else
-                res.send(updated);
+            res.status(200).json(updated);
+                // res.send(updated);
         }
     })
 
@@ -230,9 +238,13 @@ module.exports.performDelete = (req, res, next) => {
                 message: `Cannot delete Survey with id=${id}. The survey may not exist`
               });
             } else {
-              res.send({
-                message: "Survey was deleted successfully"
-              });
+                res.status(200).json({
+                    success: true,
+                    message: "Survey was deleted successfully"
+                });
+            //   res.send({
+            //     message: "Survey was deleted successfully"
+            //   });
             }
         }
     });
