@@ -1,0 +1,29 @@
+<!-- Main Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cdd7da;">
+    <img src="../../../assets/img/Group1.Logo.png" alt="logo" style="width:50px; margin-left: 20px;">
+    <a class="navbar-brand" routerLink="/">Binary Brains</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/surveys/list"><i class="fas fa-tasks"></i> Surveys </a>
+            </li>
+
+            <li class="nav-item">
+                <a *ngIf="auth.username" class="nav-link" routerLink="" (click)="logout()">Sign Out ({{ auth.username }})</a>
+                <a *ngIf="!auth.username" class="nav-link" routerLink="/login"><i class="fas fa-lock"></i> Login </a>
+            </li>
+            
+        </ul>
+
+    </div>
+</nav>

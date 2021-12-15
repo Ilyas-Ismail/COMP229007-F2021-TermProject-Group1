@@ -1,0 +1,72 @@
+<!-- Content for the Add-Question page -->
+<div class="container">
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+
+            <form [formGroup]="editQuestionForm" class="form">
+                <div class="form-group">
+                    <input type="hidden" class="form-control"
+                        id="id"
+                        name="id"
+                        formControlName="id"
+                        >
+                    <input type="hidden" class="form-control"
+                        id="title"
+                        name="title"
+                        formControlName="title"
+                        >
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="surveyTextField">Question:</label>
+                    <div class=" col-md-11">
+                    <input type="text" class="form-control"
+                        id="question"
+                        placeholder="Enter the Question"
+                        name="question"
+                        formControlName="question"
+                        >
+                    </div>
+                </div>
+
+                <br />
+                <label for="choices">Choices:</label>
+                <div formArrayName="choices" class="form-group">
+                    <div *ngFor="let choice of choices.controls; let i=index">
+                        <div class="input-group">
+                            <div class=" col-md-11">
+                        <input type="text" class="form-control mt-1"
+                            id="choices"
+                            placeholder="Enter the Choice"
+                            name="choices"
+                            [formControlName]="i"
+                            >
+                        </div>
+                            <button *ngIf="i !== 0" (click)="removeChoice(i)" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                <br />
+                <button *ngIf="choices.length < 10" (click)="addChoice()" class="btn btn-primary">
+                    Add a choice
+                </button>
+                <br />
+                <br />
+
+                <button (click)="review()" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> 
+                    Done
+                </button>
+
+                <a routerLink="/surveys/edit/view/{{ data.id }}" class="btn btn-warning">
+                    <i class="fas fa-undo"></i> 
+                    Cancel
+                </a>
+                
+        </div>
+
+    </div>
+</div>

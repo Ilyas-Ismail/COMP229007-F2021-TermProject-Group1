@@ -1,0 +1,39 @@
+<div *ngIf="survey !== undefined" class="container">
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+            <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <h2>Survey Title: {{ survey.Title }}</h2>
+            </div>
+            <br />
+            <br />
+            <div class="form-group" *ngFor="let choices of survey.Choices; let i = index">
+                <h5>Q: {{ survey.Questions![i] }} </h5>
+                <br />
+                <!-- <div formGroupName="i"> -->
+                    <mat-radio-group labelPosition="after" name="{{i}}" required [formControl]="$any(getChoice(i)).get('choice')">
+                    <div class="container" *ngFor="let choice of choices; let j = index">
+                        <div class="form-group">
+                                <mat-radio-button value="{{ choice }}">{{ choice }}</mat-radio-button>
+                            <!-- <input type="radio" id="choice{{ i }}{{ j }}" name="choice{{ i }}" value="{{ j }}">
+                            <label for="choice{{ i }}{{ j }}">
+                                {{ choice }}
+                            </label> -->
+                        </div>
+                        <br />
+                    </div>
+                    </mat-radio-group>
+                <!-- </div> -->
+                <br />
+            </div>
+            <button class="btn btn-primary">
+                Submit
+            </button>
+            &nbsp;
+            <a routerLink="/surveys/list" class="btn btn-warning">
+                Back to List
+            </a>
+          </form>
+        </div>
+    </div>
+</div>
