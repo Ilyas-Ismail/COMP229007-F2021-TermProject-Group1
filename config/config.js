@@ -7,6 +7,4 @@ module.exports = {
     // "secret": "$C&F)J@McQfTjWnZr4u7x!A%D*G-KaPdRgUkXp2s5v8y/B?E(H+MbQeThVmYq3t6"
     "URI": process.env.ATLASDB,
     "secret" : process.env.SECRETKEY
-
-
 }

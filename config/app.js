@@ -9,7 +9,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-let session = require('express-session');
+// let session = require('express-session');
 let passport = require('passport');
 require('./passport')(passport);
 
@@ -90,6 +90,7 @@ app.use('/api/surveys', surveyRouter);
 // app.get('/*', (req, res) => {
 //   res.sendFile(path.join(__dirname, '../client/static/index.html'));
 // });
+
 
 let errorHandler = require('./error-handler');
 app.use(errorHandler);
