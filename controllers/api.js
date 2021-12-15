@@ -9,6 +9,31 @@ var Users = userModel.userModel;
 let SurveyResponse = require('../models/survey_response');
 let nodemailer = require('nodemailer');
 const { deleteOne } = require('../models/mc_survey');
+var User = require('../models/users');
+let SurveyResponse = require('../models/survey_response');
+
+module.exports.saveResponse = (req, res, next) => {
+
+    let newRes = SurveyResponse({
+        surveyID: req.body.surveyID,
+        choices: req.body.choices
+    });
+
+    // save a new survey in the DB
+    SurveyResponse.create(newRes, (err, rs) =>{
+        if(err)
+        {
+            res.status(500).send({
+                message:
+                  err.message || "Some error occurred while creating a new survey response."
+            });
+        }
+        else
+        {
+            res.send(rs);
+        }
+    });
+}
 
 module.exports.saveResponse = (req, res, next) => {
 
@@ -197,7 +222,6 @@ module.exports.processEditTitlePage = (req, res, next) => {
 
 // Handles the processing of the edits done to the survey
 module.exports.processEditQuestionPage = (req, res, next) => {
-
     let index = req.params.idx;
     let id = req.body.id
     let question = req.body.question;
@@ -225,7 +249,6 @@ module.exports.processEditQuestionPage = (req, res, next) => {
 }
 
 module.exports.performDeleteQuestion = (req, res, next) => {
-
     let id = req.body.id;
     let idx = req.body.idx;
     console.log(req.body.id);
