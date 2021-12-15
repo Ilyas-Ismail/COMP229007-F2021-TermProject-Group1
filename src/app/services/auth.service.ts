@@ -21,7 +21,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
       // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/${API_PATH}`;
-      this.baseUrl = 'https://comp229007-termproject-group1.herokuapp.com/' + API_PATH;
+      this.baseUrl = 'https://comp229007-termproject-group1b.herokuapp.com/' + API_PATH;
 
    }
 
