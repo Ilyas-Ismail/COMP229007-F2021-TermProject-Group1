@@ -23,12 +23,9 @@
                             </a>
                         </td>
                         <td class="text-center col-1">
-                            <button (click)="deleteSurvey($event)" class="btn btn-danger btn-sm" value="{{ survey._id }}">
+                            <a routerLink="/surveys/delete/{{ survey._id }}" class="btn btn-danger btn-sm">
                                 <i class="fas fa-trash-alt"></i> Delete
-                            </button>
-                            <!-- <a routerLink="/surveys/delete/{{ survey._id }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
-                            <i class="fas fa-trash-alt"></i> Delete
-                            </a> -->
+                            </a>
                         </td>
                     </tr>
             </table>

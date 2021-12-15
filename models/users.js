@@ -24,6 +24,17 @@ let userModel = mongoose.Schema(
             unique: true,
             required: true,
         },
+        displayName: String,
+        provider: {
+            type: String,
+            required: 'Provider is required'
+        },
+        providerId: String,
+        providerData: {},
+        created: {
+            type: Date,
+            default: Date.now
+        }
     },
     {
         collection: "users"

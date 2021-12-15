@@ -1,7 +1,7 @@
 export class Survey {
     _id?: any;
     Title?: string;
-    UserID?: string;
+    Username?: string;
     Questions?: string[]
     Choices?: [string[]]
 }

@@ -10,6 +10,28 @@ const config = require('../config/config');
 let userModel = require('../models/users');
 var Users = userModel.userModel;
 
+function getErrorMessage(err) {
+    console.log("===> Erro: " + err);
+    let message = '';
+  
+    if (err.code) {
+      switch (err.code) {
+        case 11000:
+        case 11001:
+          message = 'Username already exists';
+          break;
+        default:
+          message = 'Something went wrong';
+      }
+    } else {
+      for (var errName in err.errors) {
+        if (err.errors[errName].message) message = err.errors[errName].message;
+      }
+    }
+  
+    return message;
+  };
+
 module.exports.displayRegisterPage = (req, res, next) => {
     // create a new survey object
     let newUser = Users();
@@ -29,10 +51,10 @@ module.exports.processRegisterPage = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
     let newUser = Users({
-        _id: req.body.id,
         username: req.body.username,
         password: hashedPassword,
-        email: req.body.email
+        email: req.body.email,
+        displayName: req.body.displayName
     });
 
     newUser.provider = 'local';
@@ -41,7 +63,8 @@ module.exports.processRegisterPage = async (req, res, next) => {
     Users.create(newUser, (err, user) => {
         if (err) {
             console.log(err);
-            return res.json({ success: false, message: err });
+            let message = getErrorMessage(err);
+            return res.json({ success: false, message: message });
         }
         else {
             // redirect
@@ -87,7 +110,8 @@ module.exports.processLoginPage = function (req, res, next) {
               if (error) return next(error);
   
               const payload = { _id: user._id, email: user.email };
-              const token = jwt.sign({ payload: payload }, config.secret);
+              const token = jwt.sign({ payload: payload }, config.secret,
+                {expiresIn: 1800});
   
               return res.json({ success: true, token: token });
             }

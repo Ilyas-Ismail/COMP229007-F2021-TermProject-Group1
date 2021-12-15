@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AddSurveyComponent implements OnInit {
   survey: Survey = {
     Title: '',
-    UserID: ''
+    Username: ''
   };
   constructor(
     private surveyService: SurveyService,
@@ -24,7 +24,7 @@ export class AddSurveyComponent implements OnInit {
   saveSurvey(): void{
     const data = {
       Title: this.survey.Title,
-      UserID: this.survey.UserID
+      Username: this.survey.Username
     };
 
     this.surveyService.create(data, 'add')

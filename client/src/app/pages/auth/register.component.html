@@ -1,0 +1,63 @@
+<div class="container">
+
+    <div class="row">
+        <div class="offset-md-4 col-md-4">
+            <h1>Register</h1>
+
+            <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage">
+                {{errorMessage}}
+            </div>
+
+            <form [formGroup]="registerForm" method="POST" autocomplete="off">
+                <fieldset class="form-group mt-3">
+                    <label style="min-width: 30%;" for="username">Username: </label>
+                    <input type="text" class="form-control"
+                    name= "username" placeholder="Enter username"
+                    id="username" formControlName="username"
+                    required autofocus>
+                </fieldset>
+    
+                <fieldset class="form-group mt-3">
+                    <label style="min-width: 30%;" for="password">Password: </label>
+                    <input type="password" class="form-control"
+                    name= "password" placeholder="Enter password"
+                    id="password" formControlName="password"
+                    required>
+                </fieldset>
+
+                <fieldset class="form-group mt-3">
+                    <label style="min-width: 30%;" for="password">Confirm: </label>
+                    <input type="password" class="form-control"
+                    name= "confirm" placeholder="Confirm password"
+                    id="confirm" formControlName="confirm"
+                    required>
+                </fieldset>
+    
+                <fieldset class="form-group mt-3">
+                    <label style="min-width: 30%;" for="email">Email: </label>
+                    <input type="email" class="form-control"
+                    name= "email" placeholder="Enter Email"
+                    id="email" formControlName="email"
+                    required>
+                </fieldset>
+                
+                <fieldset class="form-group mt-3">
+                    <label style="min-width: 30%;" for="displayName">Displayname: </label>
+                    <input type="text" class="form-control"
+                    name= "displayName" placeholder="Enter Display Name"
+                    id="displayName" formControlName="displayName"
+                    required>
+                </fieldset>
+                
+                <fieldset class="form-group text-right mt-4">
+                    <button type="submit" class="btn btn-success" (click)="onSubmit()">
+                        Register
+                    </button>
+                    <a routerLink="/" class="btn btn-warning">Cancel</a>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    
+    
+</div>

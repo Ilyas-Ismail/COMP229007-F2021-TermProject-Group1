@@ -4,20 +4,101 @@
 
 // create a reference to the model
 let Survey = require('../models/mc_survey');
-var User = require('../models/users');
+let userModel = require('../models/users');
+var Users = userModel.userModel;
+let SurveyResponse = require('../models/survey_response');
+let nodemailer = require('nodemailer');
+const { deleteOne } = require('../models/mc_survey');
 
-module.exports.surveys = function(req, res, next) {  
+module.exports.saveResponse = (req, res, next) => {
+
+    let newRes = SurveyResponse({
+        surveyID: req.body.surveyID,
+        choices: req.body.choices
+    });
+
+    // save a new survey in the DB
+    SurveyResponse.create(newRes, (err, rs) => {
+        if (err) {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating a new survey response."
+            });
+        }
+        else {
+            res.send(rs);
+        }
+    });
+}
+
+module.exports.sendMail = async (req, res, next) => {
+
+    let id = req.body.id;
+    let username = req.body.Username;
+
+    const resp = SurveyResponse.find({ surveyID: id }).cursor();
+
+    const title = Survey.findOne({ id_: id });
+
+    const email = Users.findOne({ username: username });
+
+    var allResponses = [];
+
+for (let response = await resp.next(); response != null; response = await resp.next()) {
+    allResponses.push(response);
+}
+
+console.log(allResponses);
+
+    title.select('Title');
+
+    email.select('email');
+
+    title.exec(function (err, title) {
+        if (err) return handleError(err);
+
+        email.exec(function (err, email) {
+            if (err) return handleError(err);
+
+            const transporter = nodemailer.createTransport({
+                service: "hotmail",
+                auth: {
+                    user: "WebDevTemp@hotmail.com",
+                    pass: "webdev1234"
+                }
+            });
+    
+            const options = {
+                from: "WebDevTemp@hotmail.com",
+                to: email,
+                subject: "Survey Data: " + title.Title,
+                text: "'" + allResponses + "'"
+            };
+    
+            transporter.sendMail(options, function (err, data) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log("Data Sent!");
+                }
+            })
+
+          });
+
+      });
+}
+
+module.exports.surveys = function (req, res, next) {
     Survey.find((err, surveys) => {
-        if(err)
-        {
+        if (err) {
             // return console.error(err);
             res.status(500).send({
                 message:
-                  err.message || "Some error occurred while listing surveys."
+                    err.message || "Some error occurred while listing surveys."
             });
         }
-        else
-        {
+        else {
             res.send(surveys)
         }
     });
@@ -27,15 +108,13 @@ module.exports.details = (req, res, next) => {
     let id = req.params.id;
 
     Survey.findById(id, (err, selectedSurvey) => {
-        if(err)
-        {
+        if (err) {
             res.status(500).send({
                 message:
-                  err.message || "Some error occurred while retrieving a survey."
+                    err.message || "Some error occurred while retrieving a survey."
             });
         }
-        else
-        {
+        else {
             if (!selectedSurvey)
                 res.status(404).send({ message: "The survey does not exist" });
             else
@@ -49,20 +128,20 @@ module.exports.processAddPage = (req, res, next) => {
 
     let newSurvey = Survey({
         Title: req.body.Title,
-        UserID: req.body.UserID
+        Username: req.body.Username
     });
 
+    console.log(req.user);
+
     // save a new survey in the DB
-    Survey.create(newSurvey, (err, survey) =>{
-        if(err)
-        {
+    Survey.create(newSurvey, (err, survey) => {
+        if (err) {
             res.status(500).send({
                 message:
-                  err.message || "Some error occurred while creating a new survey."
+                    err.message || "Some error occurred while creating a new survey."
             });
         }
-        else
-        {
+        else {
             res.send(survey);
         }
     });
@@ -70,25 +149,25 @@ module.exports.processAddPage = (req, res, next) => {
 
 // Handles the processing of adding a question with choices
 module.exports.processQuestionPage = (req, res, next) => {
-    
+
     let id = req.body.id;
     let question = req.body.question;
     let choices = req.body.choices;
 
     // push Q & C into the db
-    Survey.updateOne({_id: id}, {
-        $push: { Questions: question,
-                 Choices: choices }
+    Survey.updateOne({ _id: id }, {
+        $push: {
+            Questions: question,
+            Choices: choices
+        }
     }, (err, survey) => {
-        if(err)
-        {
+        if (err) {
             res.status(500).send({
                 message:
-                  err.message || "Some error occurred while creating a new question."
+                    err.message || "Some error occurred while creating a new question."
             });
         }
-        else
-        {
+        else {
             res.send(survey);
         }
     });
@@ -96,106 +175,113 @@ module.exports.processQuestionPage = (req, res, next) => {
 
 // Handles the processing of the edits done to the survey
 module.exports.processEditTitlePage = (req, res, next) => {
-    
-    if (!req.body){
-        return res.status(400).send({
-            message: "Data is required to be updated"
-        });
-    }
 
-    let id = req.params.id
+    let id = req.body.id;
 
     // update date
-    Survey.updateOne({_id: id}, {Title: req.body.Title}, (err, updated) => {
-        if(err)
-        {
-            // console.log(err);
-            // res.end(err);
+    Survey.updateOne({ _id: id }, { Title: req.body.title }, (err, updated) => {
+        if (err) {
             res.status(500).send({
                 message:
-                  err.message || "Some error occurred while updating a survey."
+                    err.message || "Some error occurred while updating a survey."
             });
         }
-        else
-        {
+        else {
             if (!updated)
                 res.status(404).send({ message: "Cannot find the targeted survey" });
             else
                 res.send(updated);
-            // res.redirect('/surveys/edit/' + id);
         }
     });
 }
 
 // Handles the processing of the edits done to the survey
 module.exports.processEditQuestionPage = (req, res, next) => {
-    
-    let id = req.params.id
-    let index = req.body.index;
-    let choices = req.body.Choices;
-    choices = choices.filter(item => item != "");
+
+    let index = req.params.idx;
+    let id = req.body.id
+    let question = req.body.question;
+    let choices = req.body.choices;
+    console.log(req.body.question);
+    console.log(req.body.choices);
 
     update = { "$set": {} };
-    update["$set"]["Questions."+index] = req.body.Questions;
-    update["$set"]["Choices."+index] = choices;
-    Survey.update({_id: id}, update, (err) => {
-        if(err)
-        {
-            console.log(err);
-            res.end(err);
+    update["$set"]["Questions." + index] = question;
+    update["$set"]["Choices." + index] = choices;
+    Survey.update({ _id: id }, update, (err, updated) => {
+        if (err) {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while updating a survey."
+            });
         }
-        else
-        {
-            res.redirect('/surveys/edit/' + id);
+        else {
+            if (!updated)
+                res.status(404).send({ message: "Cannot find the targeted survey" });
+            else
+                res.send(updated);
         }
     })
 }
 
-// Handles the processing of adding a question with choices
-module.exports.processEditAddQPage = (req, res, next) => {
-    
-    let id = req.params.id;
-    let choices = req.body.Choices;
-    choices = choices.filter(item => item != "");
+module.exports.performDeleteQuestion = (req, res, next) => {
 
-        Survey.updateOne({_id: id}, {
-            $push: { Questions: req.body.Questions,
-                     Choices: choices }
-        }, (err) => {
-            if(err)
-            {
-                console.log(err);
-                res.end(err);
-            }
+    let id = req.body.id;
+    let idx = req.body.idx;
+    console.log(req.body.id);
+    console.log(req.body.questions);
+    console.log(req.body.choices);
+
+    // update = { "$set": {} };
+    // update["$set"]["Questions"]["$concatArrays"] = [{"$slice": ["$Questions", idx]}, {"$slice": ["$Questions", {"$add": [1, idx]}]}];
+    // update["$set"]["Choices"]["$concatArrays"] = [{"$slice": ["$Choices", idx]}, {"$slice": ["$Choices", {"$add": [1, idx]}]}];
+
+    // update = { "$set": {} };
+    // update["$set"]["Questions"] = req.body.Questions;
+    // update["$set"]["Choices"] = req.body.Choices;
+    // Delete a question matched with the id from DB
+    Survey.update({ _id: id }, {
+        $set: {
+            Questions: req.body.questions,
+            Choices: req.body.choices
+        }
+    }, (err, updated) => {
+        if (err) {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while removing a question."
+            });
+        }
+        else {
+            if (!updated)
+                res.status(404).send({ message: "Cannot find the targeted survey" });
             else
-            {
-                res.redirect('/surveys/edit/'+id);
-            }
-        });
+                res.send(updated);
+        }
+    })
+
 }
 
 module.exports.performDelete = (req, res, next) => {
-    
+
     let id = req.params.id;
 
     // Delete a survey matched with the id from DB
-    Survey.remove({_id: id}, (err, survey) => {
-        if(err)
-        {
+    Survey.remove({ _id: id }, (err, survey) => {
+        if (err) {
             res.status(500).send({
                 message: "Error occured while deleting a survey"
             });
         }
-        else
-        {
+        else {
             if (!survey) {
-            res.status(404).send({
-                message: `Cannot delete Survey with id=${id}. The survey may not exist`
-              });
+                res.status(404).send({
+                    message: `Cannot delete Survey with id=${id}. The survey may not exist`
+                });
             } else {
-              res.send({
-                message: "Survey was deleted successfully"
-              });
+                res.send({
+                    message: "Survey was deleted successfully"
+                });
             }
         }
     });

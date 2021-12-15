@@ -30,17 +30,4 @@ export class ListTableComponent implements OnInit {
       });
   }
 
-  deleteSurvey(event: any): void{
-    if(!confirm('Are you sure?'))
-      return;
-    this.surveyService.delete(event.target.value)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.getSurveys();
-        },
-        error: (e) => console.error(e)
-      });
-  }
-
 }
