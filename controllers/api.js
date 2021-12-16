@@ -35,28 +35,6 @@ module.exports.saveResponse = (req, res, next) => {
     });
 }
 
-module.exports.saveResponse = (req, res, next) => {
-
-    let newRes = SurveyResponse({
-        surveyID: req.body.surveyID,
-        choices: req.body.choices
-    });
-
-    // save a new survey in the DB
-    SurveyResponse.create(newRes, (err, rs) => {
-        if (err) {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating a new survey response."
-            });
-        }
-        else {
-            // res.send(rs);
-            res.status(200).json(rs);
-        }
-    });
-}
-
 module.exports.sendMail = async (req, res, next) => {
 
     let id = req.body.id;
@@ -156,7 +134,8 @@ module.exports.processAddPage = (req, res, next) => {
 
     let newSurvey = Survey({
         Title: req.body.Title,
-        Username: req.body.Username
+        Username: req.body.Username,
+        Time: req.body.Time
     });
 
     console.log(req.user);
@@ -200,6 +179,40 @@ module.exports.processQuestionPage = (req, res, next) => {
             // res.send(survey);
             res.status(200).json(survey);
         }
+    });
+
+    const timer = Survey.findOne({ _id: id });
+
+    timer.select('_id Time');
+
+    timer.exec(function (err, myTime) {
+        if (err) return handleError(err);
+
+        let time = myTime.Time * 60000;
+
+        console.log(time);
+
+        setTimeout(function () {
+
+            Survey.deleteOne({ _id: id }, (err, survey) => {
+                if (err) {
+                    res.status(500).send({
+                        message: "Error occured while deleting a survey"
+                    });
+                }
+                else {
+                    if (!survey) {
+                        res.status(404).send({
+                            message: `Cannot delete Survey with id=${id}. The survey may not exist`
+                        });
+                    } else {
+                        // res.send({
+                        //     message: "Survey was deleted successfully"
+                        // });
+                    }
+                }
+            });
+        }, time)
     });
 }
 
