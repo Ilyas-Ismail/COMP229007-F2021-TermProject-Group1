@@ -14,12 +14,13 @@
                         [(ngModel)]="survey!.Title"
                         required>
 
-                        <label for="surveyTextField2">Username:</label>
-                    <input type="text" class="form-control"
+                        <!-- <label for="surveyTextField2">Username:</label> -->
+                    <input type="hidden" class="form-control"
                         id="surveyTextField2"
                         placeholder="Enter your Username"
                         name="Username" 
                         [(ngModel)]="survey!.Username"
+                        disabled
                         required>
                 </div>
                 <br/>

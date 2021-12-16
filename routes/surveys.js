@@ -31,4 +31,7 @@ router.put('/edit/delete', surveyController.performDeleteQuestion);
 // save a response
 router.post('/addres', surveyController.saveResponse);
 
+// send an email
+router.post('/sendmail', surveyController.sendMail);
+
 module.exports = router;

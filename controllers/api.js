@@ -44,11 +44,11 @@ module.exports.sendMail = async (req, res, next) => {
 
     var allResponses = [];
 
-for (let response = await resp.next(); response != null; response = await resp.next()) {
-    allResponses.push(response);
-}
+    for (let response = await resp.next(); response != null; response = await resp.next()) {
+        allResponses.push(response);
+    }
 
-console.log(allResponses);
+    console.log(allResponses);
 
     title.select('Title');
 
@@ -61,15 +61,15 @@ console.log(allResponses);
             if (err) return handleError(err);
 
             const transporter = nodemailer.createTransport({
-                service: "hotmail",
+                service: "gmail",
                 auth: {
-                    user: "WebDevTemp@hotmail.com",
-                    pass: "webdev1234"
+                    user: "aageros1@gmail.com",
+                    pass: "qazwsx!!23"
                 }
             });
     
             const options = {
-                from: "WebDevTemp@hotmail.com",
+                from: "aageros1@gmail.com",
                 to: email,
                 subject: "Survey Data: " + title.Title,
                 text: "'" + allResponses + "'"
@@ -78,9 +78,14 @@ console.log(allResponses);
             transporter.sendMail(options, function (err, data) {
                 if (err) {
                     console.log(err);
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while sending an email."
+                    });
                 }
                 else {
-                    console.log("Data Sent!");
+                    console.log('Data Sent!');
+                    res.send(options);
                 }
             })
 

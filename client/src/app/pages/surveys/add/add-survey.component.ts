@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Survey } from 'src/app/models/survey.model';
 import { SurveyService } from 'src/app/services/survey.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-survey',
@@ -11,9 +12,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AddSurveyComponent implements OnInit {
   survey: Survey = {
     Title: '',
-    Username: ''
+    Username: this.auth.username
   };
   constructor(
+    private auth: AuthService,
     private surveyService: SurveyService,
     private router: Router
   ) { }
