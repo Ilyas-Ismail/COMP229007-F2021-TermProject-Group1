@@ -31,6 +31,7 @@ module.exports.saveResponse = (req, res, next) => {
     });
 }
 
+//sends the user an email of the data from the survey
 module.exports.sendMail = async (req, res, next) => {
 
     let id = req.body.id;
@@ -44,11 +45,11 @@ module.exports.sendMail = async (req, res, next) => {
 
     var allResponses = [];
 
-for (let response = await resp.next(); response != null; response = await resp.next()) {
-    allResponses.push(response);
-}
+    for (let response = await resp.next(); response != null; response = await resp.next()) {
+        allResponses.push(response);
+    }
 
-console.log(allResponses);
+    console.log(allResponses);
 
     title.select('Title');
 
@@ -61,34 +62,40 @@ console.log(allResponses);
             if (err) return handleError(err);
 
             const transporter = nodemailer.createTransport({
-                service: "hotmail",
+                service: "gmail",
                 auth: {
-                    user: "WebDevTemp@hotmail.com",
-                    pass: "webdev1234"
+                    user: "aageros1@gmail.com",
+                    pass: "qazwsx!!23"
                 }
             });
-    
+
             const options = {
-                from: "WebDevTemp@hotmail.com",
+                from: "aageros1@gmail.com",
                 to: email,
                 subject: "Survey Data: " + title.Title,
                 text: "'" + allResponses + "'"
             };
-    
+
             transporter.sendMail(options, function (err, data) {
                 if (err) {
                     console.log(err);
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while sending an email."
+                    });
                 }
                 else {
-                    console.log("Data Sent!");
+                    console.log('Data Sent!');
+                    res.send(options);
                 }
             })
 
-          });
+        });
 
-      });
+    });
 }
 
+// lists all the surveys
 module.exports.surveys = function (req, res, next) {
     Survey.find((err, surveys) => {
         if (err) {
@@ -104,6 +111,7 @@ module.exports.surveys = function (req, res, next) {
     });
 }
 
+// shows the user a close-up os a survey
 module.exports.details = (req, res, next) => {
     let id = req.params.id;
 
@@ -128,7 +136,8 @@ module.exports.processAddPage = (req, res, next) => {
 
     let newSurvey = Survey({
         Title: req.body.Title,
-        Username: req.body.Username
+        Username: req.body.Username,
+        Time: req.body.Time
     });
 
     // save a new survey in the DB
@@ -140,31 +149,11 @@ module.exports.processAddPage = (req, res, next) => {
             });
         }
         else {
-        //     let id = survey._id;
-
-        //     const test = Survey.findOne({ id_: id });
-
-        //     test.select('_id');
-
-        //     console.log(id);
-
-        //     let time = 15000
-
-        //     setTimeout(function() {
-
-
-
-        //   }, time)
-          res.send(survey);
+            res.send(survey);
         }
     });
-
-    // Survey.findOne({}, {}, { sort: { 'created_at' : 1 } }, function(err, post) {
-    //     console.log( post );
-    //   });
 }
 
-// Handles the processing of adding a question with choices
 module.exports.processQuestionPage = (req, res, next) => {
 
     let id = req.body.id;
@@ -188,9 +177,45 @@ module.exports.processQuestionPage = (req, res, next) => {
             res.send(survey);
         }
     });
+
+    const timer = Survey.findOne({ _id: id });
+
+    timer.select('_id Time');
+
+    timer.exec(function (err, myTime) {
+        if (err) return handleError(err);
+
+        let time = myTime.Time * 60000;
+
+        console.log(time);
+
+        setTimeout(function () {
+
+            Survey.deleteOne({ _id: id }, (err, survey) => {
+                if (err) {
+                    res.status(500).send({
+                        message: "Error occured while deleting a survey"
+                    });
+                }
+                else {
+                    if (!survey) {
+                        res.status(404).send({
+                            message: `Cannot delete Survey with id=${id}. The survey may not exist`
+                        });
+                    } else {
+                        // res.send({
+                        //     message: "Survey was deleted successfully"
+                        // });
+                    }
+                }
+            });
+
+        }, time)
+
+    });
 }
 
-// Handles the processing of the edits done to the survey
+// Handles the processing of the edits done to the survey title
 module.exports.processEditTitlePage = (req, res, next) => {
 
     let id = req.body.id;

@@ -12,6 +12,7 @@ let mc_surveySchema = mongoose.Schema(
             required: true,
         },
         Username: String,
+        Time: Number,
         Questions: {
             type: [],
         },
