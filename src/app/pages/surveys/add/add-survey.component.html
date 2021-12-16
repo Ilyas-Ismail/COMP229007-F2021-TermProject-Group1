@@ -14,12 +14,22 @@
                         [(ngModel)]="survey!.Title"
                         required>
 
-                        <label for="surveyTextField2">Username:</label>
-                    <input type="text" class="form-control"
+                        <!-- <label for="surveyTextField2">Username:</label> -->
+                    <input type="hidden" class="form-control"
                         id="surveyTextField2"
                         placeholder="Enter your Username"
                         name="Username" 
                         [(ngModel)]="survey!.Username"
+                        disabled
+                        required>
+                </div>
+                <div>
+                <label for="surveyTextField3">Time in Minutes:</label>
+                    <input type="text" class="form-control"
+                        id="surveyTextField3"
+                        placeholder="Enter the Survey Lifespan in Minutes"
+                        name="Time" 
+                        [(ngModel)]="survey!.Time"
                         required>
                 </div>
                 <br/>

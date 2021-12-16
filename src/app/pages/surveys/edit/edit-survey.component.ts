@@ -22,6 +22,22 @@ export class EditSurveyComponent implements OnInit {
     this.getSurvey(this.route.snapshot.params["id"]);
   }
 
+  sendMail(): void{
+    this.surveyService.create({id: this.survey._id, Username: this.survey.Username}, 'sendmail')
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.router.navigate([`surveys/list`]);
+          alert('Data has been sent');
+        },
+        error: (e) => {
+          console.error(e);
+          this.router.navigate([`surveys/list`]);
+          alert("Failed to send");
+        }
+      });
+  }
+
   getSurvey(id: string): void {
     this.surveyService.get(id)
       .subscribe({

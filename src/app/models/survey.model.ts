@@ -2,6 +2,7 @@ export class Survey {
     _id?: any;
     Title?: string;
     Username?: string;
+    Time?: number;
     Questions?: string[]
     Choices?: [string[]]
 }

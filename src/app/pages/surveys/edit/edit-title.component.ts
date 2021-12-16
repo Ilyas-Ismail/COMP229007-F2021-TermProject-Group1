@@ -48,5 +48,4 @@ export class EditTitleComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
-
 }
