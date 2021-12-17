@@ -1,36 +1,41 @@
 <!-- Content for the Add_Edit page -->
 <div class="container">
     <div class="row">
-        <div class="offset-md-3 col-md-6">
+        <!-- <div class="offset-md-3 col-md-6"> -->
+            <div class="text-center d-sm-flex flex-sm-row justify-content-center">
 
-            <form class="form">
-                <h1>Sign In</h1>
+            <form class="form-signin">
+                <img class="mb-4" src="../../../assets/img/Group1.Logo.png" alt width="72" style="width:72px;">
+                <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
                 <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="message">
                     {{message}}
                 </div>
                 <div class="form-group">
                 <br/>
+                    <label for="username" class="sr-only">Username</label>
                     <input type="text" class="form-control"
                         id="username"
                         name="username" 
-                        placeholder="username"
+                        placeholder="Username"
                         [(ngModel)]="data.username"
                         required>
+                    <label for="password" class="sr-only">Password</label>
                     <input type="password" class="form-control"
-                        id="password"
-                        name="username"
-                        placeholder="password"
-                        [(ngModel)]="data.password"
-                        required>
+                    id="password"
+                    name="username"
+                    placeholder="Password"
+                    [(ngModel)]="data.password"
+                    required>
                 </div>
                 <br/>
-                <br/> 
-                <button class="btn btn-primary" type="submit" (click)="login()">
-                    <i class="fas fa-edit"></i> 
-                    Login
+                 
+                <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="login()">
+                    <i class="fas fa-sign-in-alt"></i> 
+                    Sign in
                 </button>
-                
-                <a routerLink="/register" class="btn btn-warning">
+            
+                <br>
+                <a routerLink="/register" class="btn btn-md btn-warning btn-block">
                     <i class="fas fa-edit"></i> 
                     Register
                 </a>
